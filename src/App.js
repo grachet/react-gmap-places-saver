@@ -6,10 +6,7 @@ import Setting from './screens/Setting'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 import {setCurrentUser} from "./redux/actions/user";
-import SocialButton from './containers/SocialButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Login from "./screens/Login"
 
 const lightTheme = createMuiTheme({
   palette: {
@@ -25,61 +22,18 @@ const lightTheme = createMuiTheme({
 class App extends Component {
 
   state = {
-    openSnack: false,
+    loginSuccess: false,
   };
 
   handleSocialLogin = (user) => {
-    console.log(user)
-  };
-
-  handleSocialLoginFailure = (err) => {
-    this.setState({ openSnack: true });
-  };
-
-  handleCloseSnack = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({ openSnack: false });
+    this.setState({loginSuccess: true});
+    alert('user')
   };
 
   render() {
 
-    if (true) {
-      return <div>
-        <SocialButton
-          provider='facebook'
-          appId='YOUR_APP_ID'
-          onLoginSuccess={this.handleSocialLogin}
-          onLoginFailure={this.handleSocialLoginFailure}
-        >
-          Login with Facebook
-        </SocialButton>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.openSnack}
-          autoHideDuration={6000}
-          onClose={this.handleCloseSnack}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">La connexion a échouée</span>}
-          action={
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={"closeSnack"}
-              onClick={this.handleCloseSnack}
-            >
-              <CloseIcon/>
-            </IconButton>
-          }
-        />
-      </div>
+    if (!this.state.loginSuccess) {
+      return <Login handleSocialLogin={this.handleSocialLogin}/>
     }
 
     return (
