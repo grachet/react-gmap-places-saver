@@ -53,7 +53,6 @@ class MenuAppBar extends React.Component {
             to={"/setting"}
             component={Link}
             color="inherit"
-            onClick={() => this.props.getAllProjects()}
           >
             <AccountCircle/>
           </IconButton>

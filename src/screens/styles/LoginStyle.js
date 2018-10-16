@@ -7,6 +7,7 @@ export default {
     verticalAlign: 'middle'
   },
   paperContainer: {
+    padding:30,
     textAlign: 'center',
     position: 'absolute',
     top: '20%',

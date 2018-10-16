@@ -7,14 +7,16 @@ import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 import {setCurrentUser} from "./redux/actions/user";
 import Login from "./screens/Login"
+import {color} from './const/color'
 
-const lightTheme = createMuiTheme({
+const theme = createMuiTheme({
   palette: {
+    type: 'dark', // Switching the dark mode on is a single property value change.
     primary: {
-      main: '#124191',
+      main: color.containerBackground,
     },
     secondary: {
-      main: '#1e88e5',
+      main: color.accent,
     },
   },
 });
@@ -27,7 +29,20 @@ class App extends Component {
 
   handleSocialLogin = (user) => {
     this.setState({loginSuccess: true});
-    alert('user')
+    console.log('user', user)
+    switch (user._provider) {
+      case "google":
+        console.log("google");
+        break;
+      case "facebook":
+        console.log("facebook");
+        break;
+      case "linkedin":
+        console.log("linkedin");
+        break;
+
+    }
+
   };
 
   render() {
@@ -37,7 +52,7 @@ class App extends Component {
     }
 
     return (
-      <MuiThemeProvider theme={lightTheme}>
+      <MuiThemeProvider theme={theme}>
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>
             <Route exact path='/' render={() => (<Home/>)}/>

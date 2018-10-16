@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import React, {Component} from 'react';
 import {
-  FaAmazon as AmazonIcon,
+  FaGithub as GitHubIcon,
   FaFacebookF as FacebookIcon,
   FaGoogle as GoogleIcon,
   FaLinkedinIn as LinkedInIcon
@@ -66,15 +66,6 @@ class Home extends Component {
             onLoginFailure={this.handleSocialLoginFailure}
           >
             <LinkedInIcon className={classes.icon}/> LinkedIn
-          </SocialButton>
-          <SocialButton
-            color={"#303030"}
-            provider='amazon'
-            appId='YOUR_APP_ID'
-            onLoginSuccess={this.props.handleSocialLogin}
-            onLoginFailure={this.handleSocialLoginFailure}
-          >
-            <AmazonIcon className={classes.icon}/> Amazon
           </SocialButton>
         </Paper>
         <Snackbar
