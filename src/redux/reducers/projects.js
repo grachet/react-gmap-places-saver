@@ -8,9 +8,23 @@ import {
   UPDATE_PROJECT
 } from '../actions/action.types'
 
-export default (state = null, action) => {
+export default (state = {
+  testid: {
+    projectId: "testid",
+    travelName: "test",
+    country: "france",
+    creationTimestamp: "2018-10-22T18:36:13+02:00",
+    users: {
+      "guillaume.rachet@gmail.com": {
+        "role": "owner",
+        "mailId": "guillaume.rachet@gmail.com"
+      }
+    }
+
+  }
+}, action) => {
   let a = action.payload;
-  let pid, user, uid, newState,status, success;
+  let pid, user, uid, newState, status, success;
   if (a) {
     status = a.status;
     success = status === "SUCCESS"
@@ -20,7 +34,7 @@ export default (state = null, action) => {
   }
   switch (action.type) {
     case GET_ALL_PROJECTS:
-      if(success){
+      if (success) {
         console.log("ok")
       }
       return state;

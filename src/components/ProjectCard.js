@@ -13,6 +13,7 @@ import MoreIcon from '@material-ui/icons/MoreHoriz';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AlertDialogue from "./AlertDialogue";
+import {Link} from "react-router-dom";
 
 var moment = require('moment');
 
@@ -51,13 +52,14 @@ class ProjectCard extends Component {
     const {anchorMenu} = this.state;
     return (
       <Card>
-        <CardActionArea className={classes.wmax}>
+        <CardActionArea to={"/travel/"+this.props.project.projectId}
+                        component={Link} className={classes.wmax}>
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {this.props.project.rootCourseNumber}
+              {this.props.project.travelName}
             </Typography>
             <Typography component="p">
-              {this.props.project.shortDescription}
+              {this.props.project.country}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -90,7 +92,7 @@ class ProjectCard extends Component {
         </CardActions>
         <AlertDialogue
           open={this.state.openAlertDeleteProject}
-          title={"Delete the project « " + (this.props.project.rootCourseNumber) + " » ?"}
+          title={"Delete the project « " + (this.props.project.travelName) + " » ?"}
           onClose={this.onCloseDeleteProject}
           onOk={this.onOKDeleteProject}
         />

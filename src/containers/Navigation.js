@@ -43,6 +43,10 @@ class MenuAppBar extends React.Component {
             Maps
           </Typography>
 
+          <Typography variant="title" color="inherit" className={classes.title}>
+            {this.props.title}
+          </Typography>
+
 
           <Typography variant="subheading" color="inherit">
             {currentUser && currentUser.firstName + " " + currentUser.lastName}

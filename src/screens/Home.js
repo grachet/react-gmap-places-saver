@@ -73,9 +73,9 @@ class Home extends Component {
           open={this.state.openCreateProject}
           onCancel={this.closeCreateProject}
           onOk={this.onValidateCreateProject}
-          title={"New Project"}
-          text={"Your Root Course Number begin with your area and end with a 5 digits number (RA14514) "}
-          textfield={["rootCourseNumber"]}
+          title={"New travel"}
+          text={"Where do you want to go ?"}
+          textfield={["travelName","country"]}
         />
         <UsersModal addUserToProject={this.props.addUserToProject}
                     removeUserFromProject={this.props.removeUserFromProject}
