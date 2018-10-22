@@ -1,14 +1,14 @@
 body {
-  margin: 0;
-  padding: 0;
-
+    margin: 0;
+    padding: 0;
+    background-color: #202020;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 #root {
-  height: 100vh;
+    min-height: 100vh;
 }

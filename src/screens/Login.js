@@ -10,7 +10,7 @@ import {
   FaLinkedinIn as LinkedInIcon
 } from 'react-icons/fa';
 import {withStyles} from "@material-ui/core";
-import styles from './styles/LoginStyle'
+import styles from './styles/loginStyle'
 import Paper from '@material-ui/core/Paper';
 
 

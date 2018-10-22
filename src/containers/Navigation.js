@@ -5,15 +5,13 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Logo from '@material-ui/icons/PinDrop';
 
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 
 import {connect} from 'react-redux';
-import {setCurrentUser} from "../redux/actions/user";
-
-import {getAllProjects} from "../redux/actions/project";
 
 
 const styles = {
@@ -25,6 +23,7 @@ const styles = {
   },
   title: {
     textDecoration: 'none',
+    flexGrow: 1,
   }
 };
 
@@ -37,17 +36,16 @@ class MenuAppBar extends React.Component {
 
       <AppBar position="fixed">
         <Toolbar>
-          <img src={'/img/nokia_logo.png'} className={classes.logo}/>
+          <Logo/>
 
           <Typography to={"/"}
-                      component={Link} variant="title" color="inherit" className={[classes.grow, classes.title]}>
-
-            Training Development Plan
+                      component={Link} variant="title" color="inherit" className={classes.title}>
+            Maps
           </Typography>
 
 
           <Typography variant="subheading" color="inherit">
-           {currentUser}{this.props.projects.project}
+            {currentUser && currentUser.firstName + " " + currentUser.lastName}
           </Typography>
           <IconButton
             to={"/setting"}
@@ -73,22 +71,11 @@ MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({user,project}) => {
+const mapStateToProps = ({user, projects}) => {
   return {
     currentUser: user,
-    projects: project
+    projects: projects
   };
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    setCurrentUser: (user) => {
-      dispatch(setCurrentUser(user))
-    },
-    getAllProjects: () => {
-      dispatch(getAllProjects())
-    }
-  }
-}
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(MenuAppBar));
+export default withStyles(styles)(connect(mapStateToProps)(MenuAppBar));

@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
-import './App.css';
+import './styles/App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './screens/Home'
-import Setting from './screens/Setting'
+import Home from '../screens/Home'
+import Setting from '../screens/Login'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+import Login from '../screens/Login'
 import {connect} from 'react-redux';
-import {setCurrentUser} from "./redux/actions/user";
-import Login from "./screens/Login"
-import {color} from './const/color'
+import {setCurrentUser} from "../redux/actions/user";
+import {bindActionCreators} from "redux";
+
+import {getAllProjects} from "../redux/actions/projects";
+import {color} from '../data/color'
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark', // Switching the dark mode on is a single property value change.
+    type: 'dark',
     primary: {
       main: color.containerBackground,
     },
@@ -29,21 +32,40 @@ class App extends Component {
 
   handleSocialLogin = (user) => {
     this.setState({loginSuccess: true});
-    console.log('user', user)
+    console.log('user', user._profile)
     switch (user._provider) {
       case "google":
-        console.log("google");
+        this.props.setCurrentUser({
+          id : user._profile.id,
+          mailId: user._profile.email,
+          firstName: user._profile.firstName,
+          lastName: user._profile.lastName,
+        })
         break;
       case "facebook":
-        console.log("facebook");
+        this.props.setCurrentUser({
+          id : user._profile.id,
+          mailId: user._profile.email,
+          firstName: user._profile.firstName,
+          lastName: user._profile.lastName,
+      })
         break;
       case "linkedin":
-        console.log("linkedin");
+        this.props.setCurrentUser({
+          id : user._profile.id,
+          mailId: user._profile.email,
+          firstName: user._profile.firstName,
+          lastName: user._profile.lastName,
+        })
         break;
 
     }
-
   };
+
+  componentDidMount() {
+    this.props.getAllProjects();
+  }
+
 
   render() {
 
@@ -69,13 +91,9 @@ const mapStateToProps = ({user}) => {
   return {};
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    setCurrentUser: (user) => {
-      dispatch(setCurrentUser(user))
-    }
-  }
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setCurrentUser, getAllProjects
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
