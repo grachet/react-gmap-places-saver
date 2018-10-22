@@ -9,23 +9,17 @@ import Login from '../screens/Login'
 import {connect} from 'react-redux';
 import {setCurrentUser} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
-
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {getAllProjects} from "../redux/actions/projects";
 import {color} from '../data/color'
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    primary: {
-      main: color.containerBackground,
-    },
-    secondary: {
-      main: color.accent,
-    },
-  },
-});
+
+
+
 
 class App extends Component {
+
+
 
   state = {
     loginSuccess: false,
@@ -70,12 +64,38 @@ class App extends Component {
 
   render() {
 
+    const darkTheme =  createMuiTheme({
+      palette: {
+        type: 'dark',
+        primary: {
+          main: color.containerBackground,
+        },
+        secondary: {
+          main: color.accent,
+        },
+      },
+    })
+
+    const lightTheme = createMuiTheme({
+      palette: {
+        type: "light",
+        primary: {
+          main: color.containerBackground,
+        },
+        secondary: {
+          main: color.accent,
+        },
+
+      },
+    });
+
     if (!this.state.loginSuccess) {
       return <Login handleSocialLogin={this.handleSocialLogin}/>
     }
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={this.props.user && this.props.user.lightTheme ? lightTheme : darkTheme}>
+        <CssBaseline />
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>
             <Route exact path='/' render={() => (<Home/>)}/>
@@ -90,7 +110,9 @@ class App extends Component {
 }
 
 const mapStateToProps = ({user}) => {
-  return {};
+  return {
+    user
+  };
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({

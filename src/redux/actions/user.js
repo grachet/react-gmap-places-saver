@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER} from './action.types'
+import {SET_CURRENT_USER, TOGGLE_THEME} from './action.types'
 
 export function setCurrentUser(user) {
   return {
@@ -6,3 +6,11 @@ export function setCurrentUser(user) {
     payload: {user}
   }
 }
+
+export function toggleTheme() {
+  return {
+    type: TOGGLE_THEME,
+  }
+}
+
+

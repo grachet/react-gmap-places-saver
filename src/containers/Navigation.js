@@ -3,15 +3,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import LightIcon from '@material-ui/icons/Opacity';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Logo from '@material-ui/icons/PinDrop';
 
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
-
+import {toggleTheme} from "../redux/actions/user"
 import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
 
 
 const styles = {
@@ -60,8 +61,9 @@ class MenuAppBar extends React.Component {
           </IconButton>
           <IconButton
             color="inherit"
+            onClick={() => this.props.toggleTheme()}
           >
-            <MenuIcon/>
+            <LightIcon/>
           </IconButton>
 
         </Toolbar>
@@ -82,4 +84,8 @@ const mapStateToProps = ({user, projects}) => {
   };
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(MenuAppBar));
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleTheme
+}, dispatch);
+
+export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(MenuAppBar));

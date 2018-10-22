@@ -2,6 +2,7 @@ import SocialButton from '../containers/SocialButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
 import React, {Component} from 'react';
 import {
   FaGithub as GitHubIcon,
@@ -12,6 +13,7 @@ import {
 import {withStyles} from "@material-ui/core";
 import styles from './styles/loginStyle'
 import Paper from '@material-ui/core/Paper';
+import UsersModal from "../components/UsersModal";
 
 
 class Home extends Component {
@@ -35,11 +37,13 @@ class Home extends Component {
 
   render() {
 
-    const {classes} = this.props
+    const {classes} = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <Paper className={classes.paperContainer} elevation={2}>
+          <Typography variant="display1" className={classes.loginTitle} color="textPrimary">Maps Saver</Typography>
+          <Typography variant="subheading" className={classes.loginSubtitle} color="textPrimary">By Guillaume Rachet</Typography>
           <SocialButton
             color={"#3b5998"}
             provider='facebook'
