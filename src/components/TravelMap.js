@@ -1,35 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react'
+import Map from 'pigeon-maps'
 
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
+export default class TravelMap extends Component {
+    state = {
+        lat: 51.505,
+        lng: -0.09,
+        zoom: 13,
+    }
 
+    render() {
+        const position = [this.state.lat, this.state.lng]
+        return (
 
-const styles = {
-  grow: {
-    flexGrow: 1,
-  },
-  logo: {
-    height: 60
-  },
-  title: {
-    textDecoration: 'none',
-    flexGrow: 1,
-  }
-};
+            <div style={{height: "100vh", width: "100%"}}>
+                <Map center={position} zoom={this.state.zoom}>
 
-class MenuAppBar extends React.Component {
+                </Map>
+            </div>
 
-  render() {
-    const {classes} = this.props;
-
-    return (
-      <div><p>fd</p></div>
-    );
-  }
+        )
+    }
 }
-
-MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MenuAppBar);

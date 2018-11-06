@@ -27,7 +27,6 @@ class App extends Component {
 
   handleSocialLogin = (user) => {
     this.setState({loginSuccess: true});
-    console.log('user', user._profile)
     switch (user._provider) {
       case "google":
         this.props.setCurrentUser({

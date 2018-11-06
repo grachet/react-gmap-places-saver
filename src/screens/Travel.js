@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Navigation from '../containers/Navigation'
-import styles from './styles/homeStyle'
+import styles from './styles/travelStyle'
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ProjectCard from '../components/ProjectCard'
@@ -16,46 +16,72 @@ import {bindActionCreators} from 'redux';
 import {addUserToProject, createProject, deleteProject, removeUserFromProject} from '../redux/actions/projects'
 import PromptDialogue from '../components/PromptDialogue'
 import UsersModal from '../components/UsersModal'
+
+
 var _ = require('lodash');
 var uniqid = require('uniqid');
 var moment = require('moment');
 
+const defaultProps = {
+    center: {lat: 40.7446790, lng: -73.9485420},
+    zoom: 11
+}
+
 class Home extends Component {
 
-  state = {
-    mapsVisible:true
-  };
+    state = {
+        mapsVisible: true
+    };
 
-  render() {
-    const {id} = this.props.match.params;
-    const {classes, projects} = this.props;
-    let project = projects[id];
-   const {travelName, country} = project;
-    return (
-      <div className={classes.container}>
-        <Navigation title={travelName + " - " + country}/>
-        <Button onClick={() => this.setState({mapsVisible:!this.state.mapsVisible})} variant="fab" color="secondary" aria-label="Add"
-                className={classes.fab}>
-          {!this.state.mapsVisible && <NoMapIcon/>}
-          {this.state.mapsVisible && <MapIcon/>}
-        </Button>
-        {!this.state.mapsVisible && <TravelMap/>}
-        {this.state.mapsVisible && <TravelGrid/>}
-      </div>
-    );
-  }
+    render() {
+        const {id} = this.props.match.params;
+        const {classes, projects} = this.props;
+        let project = projects[id];
+        const {travelName, country} = project;
+        return (
+
+            <div className={classes.root}>
+                <Navigation title={travelName + " - " + country}/>
+                <Button onClick={() => this.setState({mapsVisible: !this.state.mapsVisible})} variant="fab"
+                        color="secondary" aria-label="Add"
+                        className={classes.fab}>
+                    {this.state.mapsVisible && <NoMapIcon/>}
+                    {!this.state.mapsVisible && <MapIcon/>}
+                </Button>
+                <Grid container spacing={24}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+                       <PlaceSearcher/>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={8} xl={9}>
+                        {this.state.mapsVisible && <TravelMap {...defaultProps}/>}
+                        {!this.state.mapsVisible && <TravelGrid/>}
+                    </Grid>
+                </Grid>
+            </div>
+
+
+            // <div>
+            //   <Navigation title={travelName + " - " + country}/>
+            //   <Button onClick={() => this.setState({mapsVisible:!this.state.mapsVisible})} variant="fab" color="secondary" aria-label="Add"
+            //           className={classes.fab}>
+            //     {this.state.mapsVisible && <NoMapIcon/>}
+            //     {!this.state.mapsVisible && <MapIcon/>}
+            //   </Button>
+            //   {this.state.mapsVisible && <TravelMap {...defaultProps}/>}
+            //   {!this.state.mapsVisible && <TravelGrid/>}
+            // </div>
+        );
+    }
 }
 
 
 const mapStateToProps = ({user, projects}) => {
-  return {
-    projects, currentUser: user
-  };
+    return {
+        projects, currentUser: user
+    };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Home));
 
