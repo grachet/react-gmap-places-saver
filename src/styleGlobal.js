@@ -12,7 +12,7 @@ const baseStyles = {
     maxWidth: 1000,
     flexGrow: 1,
     padding: 20,
-    margin: "auto"
+    margin: "auto",
   },
   mrs: {
     marginRight: 5
@@ -51,6 +51,7 @@ const baseStyles = {
     position: 'fixed',
     bottom: 80,
     right: 80,
+    zIndex:1000
   }
 
 

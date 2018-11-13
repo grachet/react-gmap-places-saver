@@ -12,7 +12,7 @@ export default class TravelMap extends Component {
         const position = [this.state.lat, this.state.lng]
         return (
 
-            <div style={{height: "100vh", width: "100%"}}>
+            <div style={{height: "100vh", width: "100%", margin:0}}>
                 <Map center={position} zoom={this.state.zoom}>
 
                 </Map>

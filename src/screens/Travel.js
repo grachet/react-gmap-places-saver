@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import MapIcon from '@material-ui/icons/Map';
 import NoMapIcon from '@material-ui/icons/Dashboard';
 import connect from "react-redux/es/connect/connect";
-
+import PlaceSearcher from '../components/PlaceSearcher'
 import TravelMap from '../components/TravelMap'
 import TravelGrid from '../components/TravelGrid'
 import {bindActionCreators} from 'redux';
@@ -58,18 +58,6 @@ class Home extends Component {
                     </Grid>
                 </Grid>
             </div>
-
-
-            // <div>
-            //   <Navigation title={travelName + " - " + country}/>
-            //   <Button onClick={() => this.setState({mapsVisible:!this.state.mapsVisible})} variant="fab" color="secondary" aria-label="Add"
-            //           className={classes.fab}>
-            //     {this.state.mapsVisible && <NoMapIcon/>}
-            //     {!this.state.mapsVisible && <MapIcon/>}
-            //   </Button>
-            //   {this.state.mapsVisible && <TravelMap {...defaultProps}/>}
-            //   {!this.state.mapsVisible && <TravelGrid/>}
-            // </div>
         );
     }
 }
