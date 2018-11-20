@@ -2,54 +2,34 @@ import {
   ADD_USER_TO_PROJECT,
   CREATE_PROJECT,
   DELETE_PROJECT,
-  GET_ALL_PROJECTS,
   GET_USER_PROJECTS,
   REMOVE_USER_FROM_PROJECT,
   UPDATE_PROJECT
 } from '../actions/action.types'
+import {dbArrayToObject} from '../actions/utils'
 
-export default (state = {
-  testid: {
-    projectId: "testid",
-    travelName: "test",
-    country: "france",
-    creationTimestamp: "2018-10-22T18:36:13+02:00",
-    users: {
-      "guillaume.rachet@gmail.com": {
-        "role": "owner",
-        "mailId": "guillaume.rachet@gmail.com"
-      }
-    }
-
-  }
-}, action) => {
+export default (state = null, action) => {
   let a = action.payload;
-  let pid, user, uid, newState, status, success;
+  let pid, user, uid, newState, status, success, request;
   if (a) {
     status = a.status;
-    success = status === "SUCCESS"
-    pid = (a.projectId) || (a.project && a.project.projectId);
+    success = status === "SUCCESS" || action.status === "SUCCESS";
+    request = status === "REQUEST" || action.status === "REQUEST";
+    pid = (a._id) || (a.id) || (a.project && a.project._id);
     user = a.user;
-    uid = (user && user.mailId) || a.mailId
+    uid = (user && user._id) || a._id
   }
   switch (action.type) {
-    case GET_ALL_PROJECTS:
-      if (success) {
-        console.log("ok")
-      }
-      return state;
     case GET_USER_PROJECTS:
-      return state;
+      return success ? dbArrayToObject(a.rows) : state;
     case REMOVE_USER_FROM_PROJECT:
-      newState = {...state};
-      delete newState[pid].users[uid];
-      return newState
+      return success ? {...state, [pid]: a} : state;
     case ADD_USER_TO_PROJECT:
-      return {...state, [pid]: {...state[pid], users: {...state[pid].users, [uid]: user}}};
+      return success ? {...state, [pid]: a} : state;
     case CREATE_PROJECT:
-      return {...state, [pid]: a.project};
+      return success ? {...state, [pid]: a} : state;
     case UPDATE_PROJECT:
-      return {...state, [pid]: a.project};
+      return success ? {...state, [pid]: a} : state;
     case DELETE_PROJECT:
       newState = {...state};
       delete newState[pid];

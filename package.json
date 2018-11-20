@@ -11,6 +11,7 @@
     "halogenium": "^2.2.3",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
+    "nano": "^7.1.1",
     "pigeon-maps": "^0.11.6",
     "react": "^16.5.2",
     "react-adal": "^0.4.18",

@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {setCurrentUser} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {getAllProjects} from "../redux/actions/projects";
+import {getUserProjects} from "../redux/actions/projects";
 import {color} from '../data/color'
 
 
@@ -30,7 +30,8 @@ class App extends Component {
     switch (user._provider) {
       case "google":
         this.props.setCurrentUser({
-          id : user._profile.id,
+          _id : user._profile.id,
+          docType: "user",
           mailId: user._profile.email,
           firstName: user._profile.firstName,
           lastName: user._profile.lastName,
@@ -38,7 +39,8 @@ class App extends Component {
         break;
       case "facebook":
         this.props.setCurrentUser({
-          id : user._profile.id,
+          _id : user._profile.id,
+          docType: "user",
           mailId: user._profile.email,
           firstName: user._profile.firstName,
           lastName: user._profile.lastName,
@@ -46,19 +48,16 @@ class App extends Component {
         break;
       case "linkedin":
         this.props.setCurrentUser({
-          id : user._profile.id,
+          docType: "user",
+          _id : user._profile.id,
           mailId: user._profile.email,
           firstName: user._profile.firstName,
           lastName: user._profile.lastName,
         })
         break;
-
     }
+    this.props.getUserProjects(user._profile._id);
   };
-
-  componentDidMount() {
-    this.props.getAllProjects();
-  }
 
 
   render() {
@@ -115,7 +114,7 @@ const mapStateToProps = ({user}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setCurrentUser, getAllProjects
+  setCurrentUser, getUserProjects
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
