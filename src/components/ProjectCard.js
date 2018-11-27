@@ -42,7 +42,7 @@ class ProjectCard extends Component {
 
   onOKDeleteProject = () => {
     this.setState({openAlertDeleteProject: false});
-    this.props.deleteProject(this.props.project.projectId)
+    this.props.removeProject(this.props.project.projectId)
   };
 
 

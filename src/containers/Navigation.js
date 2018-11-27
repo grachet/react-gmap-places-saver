@@ -10,7 +10,7 @@ import Logo from '@material-ui/icons/PinDrop';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
-import {toggleUserPreference} from "../redux/actions/user"
+import {toggleTheme} from "../redux/actions/user"
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
@@ -61,7 +61,7 @@ class MenuAppBar extends React.Component {
           </IconButton>
           <IconButton
             color="inherit"
-            onClick={() => this.props.toggleUserPreference(user, "darkTheme")}
+            onClick={() => this.props.toggleTheme()}
           >
             <LightIcon/>
           </IconButton>
@@ -85,7 +85,7 @@ const mapStateToProps = ({user, projects}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleUserPreference
+  toggleTheme
 }, dispatch);
 
 export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(MenuAppBar));

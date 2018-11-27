@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {setCurrentUser} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {getUserProjects} from "../redux/actions/projects";
+import {fetchProjects} from "../redux/actions/projects";
 import {color} from '../data/color'
 
 
@@ -56,7 +56,7 @@ class App extends Component {
         })
         break;
     }
-    this.props.getUserProjects(user._profile._id);
+    this.props.fetchProjects(user._profile._id);
   };
 
 
@@ -114,7 +114,7 @@ const mapStateToProps = ({user}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setCurrentUser, getUserProjects
+  setCurrentUser, fetchProjects
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

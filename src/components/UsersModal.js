@@ -15,6 +15,7 @@ import PromptDialogue from '../components/PromptDialogue'
 import AlertDialogue from '../components/AlertDialogue'
 
 
+var uniqid = require('uniqid');
 var _ = require('lodash');
 
 const styles = {
@@ -40,8 +41,11 @@ class SimpleDialog extends React.Component {
   };
 
   onOKRemove = () => {
-    this.setState({openAlertRemove: false});
-    this.props.removeUserFromProject(this.state.userIdToRemove, this.props.project.projectId)
+    this.setState({openAlertRemove: false})
+    let newProject = {...this.props.project}
+    delete newProject["users"][this.state.userIdToRemove];
+    console.log("newProject", newProject);
+    this.props.updateProject(newProject)
   };
 
   closeAddUser = () => {
@@ -52,11 +56,12 @@ class SimpleDialog extends React.Component {
 
   onOkAddUser = (data) => {
     let user = {
+      "id": uniqid(),
       "role": data.Role,
       "mailId": data.Mail
     }
     this.setState({openAddContact: false});
-    this.props.addUserToProject(user, this.props.project.projectId)
+    this.props.updateProject({...this.props.project, users: {...this.props.project.users, [user.id]: user}})
     this.props.openUsersModal(null)
   };
 
@@ -77,7 +82,7 @@ class SimpleDialog extends React.Component {
         <div>
           <List>
             {project && _.values(project.users).map(user => (
-              <ListItem button onClick={() => this.onClickUser(user.mailId)} key={user.mailId}>
+              <ListItem button onClick={() => this.onClickUser(user.id)} key={user.mailId}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>
                     <PersonIcon/>

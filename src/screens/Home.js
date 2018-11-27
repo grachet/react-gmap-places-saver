@@ -9,10 +9,9 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from 'redux';
-import {addUserToProject, createProject, deleteProject, removeUserFromProject} from '../redux/actions/projects'
+import { fetchProjects, removeProject, updateProject} from '../redux/actions/projects'
 import PromptDialogue from '../components/PromptDialogue'
 import UsersModal from '../components/UsersModal'
-
 
 var _ = require('lodash');
 var uniqid = require('uniqid');
@@ -45,13 +44,15 @@ class Home extends Component {
   };
 
   onValidateCreateProject = (project) => {
-    const {mailId} = this.props.currentUser;
-    this.props.createProject({
+    const {_id,mailId} = this.props.currentUser;
+    let id = uniqid()
+    this.props.updateProject({
       ...project,
-      projectId: uniqid(),
+      projectId: id,
       creationTimestamp: moment().format(),
       users: {
-        [mailId]: {
+        [_id]: {
+          "id":_id,
           "role": "Project Manager",
           "mailId": mailId
         }
@@ -75,21 +76,21 @@ class Home extends Component {
           onOk={this.onValidateCreateProject}
           title={"New travel"}
           text={"Where do you want to go ?"}
-          textfield={["travelName","country"]}
+          textfield={["travelName", "country"]}
         />
-        <UsersModal addUserToProject={this.props.addUserToProject}
-                    removeUserFromProject={this.props.removeUserFromProject}
-                    closeUsersModal={this.closeUsersModal}
-                    openUsersModal={this.openUsersModal}
-                    project={this.props.projects && this.props.projects[this.projectId]}
-                    open={this.state.openUsersModal}/>
+        <UsersModal
+          updateProject={this.props.updateProject}
+          closeUsersModal={this.closeUsersModal}
+          openUsersModal={this.openUsersModal}
+          project={this.props.projects && this.props.projects[this.projectId]}
+          open={this.state.openUsersModal}/>
         <Typography variant="display1" className={classes.myl} color="textPrimary">My travels</Typography>
         <Grid container className={classes.cardContainer} spacing={24}>
           {projects && _.orderBy(_.values(projects), function (o) {
             return new moment(o.creationTimestamp);
-          }, ['asc']).map(project => <Grid  key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
+          }, ['asc']).map(project => <Grid key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
             <ProjectCard
-              deleteProject={this.props.deleteProject}
+              removeProject={this.props.removeProject}
               openUsersModal={this.openUsersModal}
               project={project}/>
           </Grid>)}
@@ -107,7 +108,7 @@ const mapStateToProps = ({user, projects}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  createProject, addUserToProject, removeUserFromProject, deleteProject
+  removeProject, updateProject, fetchProjects
 }, dispatch);
 
 export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Home));

@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, TOGGLE_USER_PREFERENCE} from "../actions/action.types";
+import {SET_CURRENT_USER, TOGGLE_THEME} from "../actions/action.types";
 
 
 export default (state = null, action) => {
@@ -12,9 +12,9 @@ export default (state = null, action) => {
 
   switch (action.type) {
     case SET_CURRENT_USER:
-      return success ? action.payload : state;
-    case TOGGLE_USER_PREFERENCE:
-      return request || success ? a : state;
+      return action.payload.user;
+    case TOGGLE_THEME:
+      return {...state, lightTheme:!state.lightTheme};
     default:
       return state;
   }
