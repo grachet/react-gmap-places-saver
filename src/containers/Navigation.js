@@ -5,12 +5,14 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import LightIcon from '@material-ui/icons/Opacity';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import SettingsIcon from '@material-ui/icons/Settings';
 import Logo from '@material-ui/icons/PinDrop';
 
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
-import {toggleTheme} from "../redux/actions/user"
+import {signOut, toggleTheme} from "../redux/actions/user"
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
@@ -33,6 +35,8 @@ class MenuAppBar extends React.Component {
   render() {
     const {classes, user} = this.props;
 
+    console.log("user", user);
+
     return (
 
       <AppBar position="fixed">
@@ -52,12 +56,19 @@ class MenuAppBar extends React.Component {
           <Typography variant="subheading" color="inherit">
             {user && user.firstName + " " + user.lastName}
           </Typography>
+
+          <IconButton
+            color="inherit"
+            onClick={() => this.props.signOut()}
+          >
+            <AccountCircle/>
+          </IconButton>
           <IconButton
             to={"/setting"}
             component={Link}
             color="inherit"
           >
-            <AccountCircle/>
+            <SettingsIcon/>
           </IconButton>
           <IconButton
             color="inherit"
@@ -79,13 +90,13 @@ MenuAppBar.propTypes = {
 
 const mapStateToProps = ({user, projects}) => {
   return {
-  user,
+    user,
     projects: projects
   };
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  toggleTheme
+  toggleTheme, signOut
 }, dispatch);
 
-export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(MenuAppBar));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(MenuAppBar));

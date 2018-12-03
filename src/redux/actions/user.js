@@ -1,4 +1,5 @@
-import {FAILURE, REQUEST, SET_CURRENT_USER, SUCCESS, TOGGLE_THEME} from './action.types'
+import { TOGGLE_THEME, FETCH_USER} from './action.types'
+import { authRef, provider } from "../../config/firebase";
 
 
 export function toggleTheme() {
@@ -7,9 +8,38 @@ export function toggleTheme() {
   }
 }
 
-export function setCurrentUser(user) {
-  return {
-    type: SET_CURRENT_USER,
-    payload: {user}
-  }
-}
+export const fetchUser = () => dispatch => {
+  authRef.onAuthStateChanged(user => {
+    if (user) {
+      dispatch({
+        type: FETCH_USER,
+        payload: user
+      });
+    } else {
+      dispatch({
+        type: FETCH_USER,
+        payload: null
+      });
+    }
+  });
+};
+
+export const signIn = () => dispatch => {
+  authRef
+    .signInWithPopup(provider)
+    .then(result => {})
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+export const signOut = () => dispatch => {
+  authRef
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};

@@ -5,60 +5,22 @@ import Home from '../screens/Home'
 import Setting from '../screens/Setting'
 import Travel from '../screens/Travel'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
-import Login from '../screens/Login'
 import {connect} from 'react-redux';
-import {setCurrentUser} from "../redux/actions/user";
+import {fetchUser} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {fetchProjects} from "../redux/actions/projects";
 import {color} from '../data/color'
-
-
-
-
+import requireAuth from "../containers/requireAuth";
+import SignIn from "../containers/SignIn"
 
 class App extends Component {
 
 
 
-  state = {
-    loginSuccess: false,
-  };
-
-  handleSocialLogin = (user) => {
-    this.setState({loginSuccess: true});
-    switch (user._provider) {
-      case "google":
-        this.props.setCurrentUser({
-          _id : user._profile.id,
-          docType: "user",
-          mailId: user._profile.email,
-          firstName: user._profile.firstName,
-          lastName: user._profile.lastName,
-        })
-        break;
-      case "facebook":
-        this.props.setCurrentUser({
-          _id : user._profile.id,
-          docType: "user",
-          mailId: user._profile.email,
-          firstName: user._profile.firstName,
-          lastName: user._profile.lastName,
-      })
-        break;
-      case "linkedin":
-        this.props.setCurrentUser({
-          docType: "user",
-          _id : user._profile.id,
-          mailId: user._profile.email,
-          firstName: user._profile.firstName,
-          lastName: user._profile.lastName,
-        })
-        break;
-    }
-    this.props.fetchProjects(user._profile._id);
-  };
-
+  componentWillMount() {
+    this.props.fetchUser();
+  }
 
   render() {
 
@@ -87,18 +49,16 @@ class App extends Component {
       },
     });
 
-    if (!this.state.loginSuccess) {
-      return <Login handleSocialLogin={this.handleSocialLogin}/>
-    }
 
     return (
       <MuiThemeProvider theme={this.props.user && this.props.user.lightTheme ? lightTheme : darkTheme}>
         <CssBaseline />
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>
-            <Route exact path='/' render={() => (<Home/>)}/>
-            <Route path='/setting' component={Setting}/>
-            <Route path='/travel/:id' component={Travel}/>
+            <Route exact path="/" component={SignIn} />
+            <Route path="/home" component={requireAuth(Home)} />
+            <Route path='/setting' component={requireAuth(Setting)}/>
+            <Route path='/travel/:id' component={requireAuth(Travel)}/>
             <Route component={Home}/>
           </Switch>
         </Router>
@@ -114,7 +74,7 @@ const mapStateToProps = ({user}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  setCurrentUser, fetchProjects
+  fetchUser, fetchProjects
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
