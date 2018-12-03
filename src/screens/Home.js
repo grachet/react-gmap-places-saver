@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import connect from "react-redux/es/connect/connect";
 import {bindActionCreators} from 'redux';
-import { fetchProjects, removeProject, updateProject} from '../redux/actions/projects'
+import {fetchProjects, removeProject, updateProject} from '../redux/actions/projects'
 import PromptDialogue from '../components/PromptDialogue'
 import UsersModal from '../components/UsersModal'
 
@@ -44,17 +44,18 @@ class Home extends Component {
   };
 
   onValidateCreateProject = (project) => {
-    const {_id,mailId} = this.props.currentUser;
+    //todo
+    const {uid, email} = this.props.currentUser;
     let id = uniqid()
     this.props.updateProject({
       ...project,
       projectId: id,
       creationTimestamp: moment().format(),
       users: {
-        [_id]: {
-          "id":_id,
+        [uid]: {
           "role": "Project Manager",
-          "mailId": mailId
+          uid,
+          email
         }
       }
     });

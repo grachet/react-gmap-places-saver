@@ -35,8 +35,6 @@ class MenuAppBar extends React.Component {
   render() {
     const {classes, user} = this.props;
 
-    console.log("user", user);
-
     return (
 
       <AppBar position="fixed">

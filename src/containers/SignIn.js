@@ -14,7 +14,6 @@ class Signin extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.user) {
-      console.log("true auth");
       this.props.history.push('/home')
     }
   }

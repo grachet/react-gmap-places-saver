@@ -44,7 +44,6 @@ class SimpleDialog extends React.Component {
     this.setState({openAlertRemove: false})
     let newProject = {...this.props.project}
     delete newProject["users"][this.state.userIdToRemove];
-    console.log("newProject", newProject);
     this.props.updateProject(newProject)
   };
 

@@ -20,6 +20,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.fetchUser();
+    this.props.fetchProjects();
   }
 
   render() {

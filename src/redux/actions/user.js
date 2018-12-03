@@ -1,5 +1,6 @@
 import { TOGGLE_THEME, FETCH_USER} from './action.types'
 import { authRef, GithubProvider,GoogleProvider,FacebookProvider,EmailProvider } from "../../config/firebase";
+import * as firebase from "firebase";
 
 
 export function toggleTheme() {
@@ -7,6 +8,10 @@ export function toggleTheme() {
     type: TOGGLE_THEME,
   }
 }
+
+export const addUserInDatabase = (user,uid) => async dispatch => {
+  firebase.database().ref('users/' + (uid || user.uid )).set(user);
+};
 
 export const fetchUser = () => dispatch => {
   authRef.onAuthStateChanged(user => {
@@ -24,12 +29,15 @@ export const fetchUser = () => dispatch => {
   });
 };
 
+
 export const signIn = (provider) => dispatch => {
   switch (provider) {
     case "google":
       authRef
         .signInWithPopup(GoogleProvider)
-        .then(result => {})
+        .then(result => {
+          console.log("result", result);
+          addUserInDatabase(result)})
         .catch(error => {
           console.log(error);
         });
