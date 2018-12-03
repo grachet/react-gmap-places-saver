@@ -41,10 +41,15 @@ export default {
       borderRadius: 2,
       backgroundColor: "#DF4B37"
     },
-  buttonLoginLinkedIn:
+  buttonLoginGitHub:
     {
       margin: 10,
       borderRadius: 2,
-      backgroundColor: "#0D77B7"
+      backgroundColor: "#1a1a1a"
+    },
+  buttonLoginAnonymous:
+    {
+      margin: 10,
+      borderRadius: 2
     }
 }

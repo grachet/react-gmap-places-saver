@@ -43,7 +43,7 @@ class MenuAppBar extends React.Component {
         <Toolbar>
           <Logo/>
 
-          <Typography to={"/"}
+          <Typography to={"/home"}
                       component={Link} variant="title" color="inherit" className={classes.title}>
             Maps
           </Typography>
@@ -54,7 +54,7 @@ class MenuAppBar extends React.Component {
 
 
           <Typography variant="subheading" color="inherit">
-            {user && user.firstName + " " + user.lastName}
+            {user.isAnonymous ? "Anonymous" : user.displayName}
           </Typography>
 
           <IconButton

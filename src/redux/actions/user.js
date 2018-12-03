@@ -1,5 +1,5 @@
 import { TOGGLE_THEME, FETCH_USER} from './action.types'
-import { authRef, provider } from "../../config/firebase";
+import { authRef, GithubProvider,GoogleProvider,FacebookProvider,EmailProvider } from "../../config/firebase";
 
 
 export function toggleTheme() {
@@ -24,13 +24,41 @@ export const fetchUser = () => dispatch => {
   });
 };
 
-export const signIn = () => dispatch => {
-  authRef
-    .signInWithPopup(provider)
-    .then(result => {})
-    .catch(error => {
-      console.log(error);
-    });
+export const signIn = (provider) => dispatch => {
+  switch (provider) {
+    case "google":
+      authRef
+        .signInWithPopup(GoogleProvider)
+        .then(result => {})
+        .catch(error => {
+          console.log(error);
+        });
+      break;
+    case "facebook":
+      authRef
+        .signInWithPopup(FacebookProvider)
+        .then(result => {})
+        .catch(error => {
+          console.log(error);
+        });
+      break;
+    case "github":
+      authRef
+        .signInWithPopup(GithubProvider)
+        .then(result => {})
+        .catch(error => {
+          console.log(error);
+        });
+      break;
+    case "anonymous":
+      authRef
+        .signInAnonymously()
+        .then(result => {})
+        .catch(error => {
+          console.log(error);
+        });
+      break;
+  }
 };
 
 export const signOut = () => dispatch => {
