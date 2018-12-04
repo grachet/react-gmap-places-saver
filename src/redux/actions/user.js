@@ -1,5 +1,5 @@
-import { TOGGLE_THEME, FETCH_USER} from './action.types'
-import { authRef, GithubProvider,GoogleProvider,FacebookProvider,EmailProvider } from "../../config/firebase";
+import {FETCH_USER, TOGGLE_THEME} from './action.types'
+import {authRef, EmailProvider, FacebookProvider, GithubProvider, GoogleProvider} from "../../config/firebase";
 import * as firebase from "firebase";
 
 
@@ -9,8 +9,9 @@ export function toggleTheme() {
   }
 }
 
-export const addUserInDatabase = (user,uid) => async dispatch => {
-  firebase.database().ref('users/' + (uid || user.uid )).set(user);
+export const addUserInDatabase = (user) => async dispatch => {
+  console.log("user", user);
+  firebase.database().ref('users/' + user.uid).set(user);
 };
 
 export const fetchUser = () => dispatch => {
@@ -36,8 +37,13 @@ export const signIn = (provider) => dispatch => {
       authRef
         .signInWithPopup(GoogleProvider)
         .then(result => {
-          console.log("result", result);
-          addUserInDatabase(result)})
+          if (!result.user.isAnonymous) {
+            addUserInDatabase({
+              name: result.user.email || result.user.displayName,
+              uid: result.user.uid
+            })
+          }
+        })
         .catch(error => {
           console.log(error);
         });
@@ -45,7 +51,8 @@ export const signIn = (provider) => dispatch => {
     case "facebook":
       authRef
         .signInWithPopup(FacebookProvider)
-        .then(result => {})
+        .then(result => {
+        })
         .catch(error => {
           console.log(error);
         });
@@ -53,7 +60,8 @@ export const signIn = (provider) => dispatch => {
     case "github":
       authRef
         .signInWithPopup(GithubProvider)
-        .then(result => {})
+        .then(result => {
+        })
         .catch(error => {
           console.log(error);
         });
@@ -61,7 +69,8 @@ export const signIn = (provider) => dispatch => {
     case "anonymous":
       authRef
         .signInAnonymously()
-        .then(result => {})
+        .then(result => {
+        })
         .catch(error => {
           console.log(error);
         });
