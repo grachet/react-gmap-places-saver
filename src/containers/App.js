@@ -6,7 +6,7 @@ import Setting from '../screens/Setting'
 import Travel from '../screens/Travel'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import {fetchUser} from "../redux/actions/user";
+import {fetchUser,fetchUsers} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {fetchProjects} from "../redux/actions/projects";
@@ -20,6 +20,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.fetchUser();
+    this.props.fetchUsers();
     this.props.fetchProjects();
   }
 
@@ -75,7 +76,7 @@ const mapStateToProps = ({user}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchUser, fetchProjects
+  fetchUser, fetchProjects,fetchUsers
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

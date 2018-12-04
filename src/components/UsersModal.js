@@ -71,7 +71,12 @@ class SimpleDialog extends React.Component {
 
 
   render() {
-    const {classes, closeUsersModal, project} = this.props;
+    const {classes, closeUsersModal, project, users} = this.props;
+
+    console.log("users",users);
+
+    let usersId = Object.keys(users);
+    let names = users.map(user => )
 
     return (
       [<Dialog key={1} onClose={closeUsersModal}

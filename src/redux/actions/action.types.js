@@ -7,3 +7,4 @@ export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const REMOVE_PROJECT = "REMOVE_PROJECT";
 export const TOGGLE_THEME = "TOGGLE_THEME";
 export const FETCH_USER = "FETCH_USER";
+export const FETCH_USERS = "FETCH_USERS";

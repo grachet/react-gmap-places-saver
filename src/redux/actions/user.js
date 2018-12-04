@@ -1,5 +1,12 @@
-import {FETCH_USER, TOGGLE_THEME} from './action.types'
-import {authRef, EmailProvider, FacebookProvider, GithubProvider, GoogleProvider} from "../../config/firebase";
+import {FETCH_USERS, FETCH_USER, TOGGLE_THEME} from './action.types'
+import {
+  authRef,
+  EmailProvider,
+  FacebookProvider,
+  GithubProvider,
+  GoogleProvider,
+  usersRef
+} from "../../config/firebase";
 import * as firebase from "firebase";
 
 
@@ -8,11 +15,6 @@ export function toggleTheme() {
     type: TOGGLE_THEME,
   }
 }
-
-export const addUserInDatabase = (user) => async dispatch => {
-  console.log("user", user);
-  firebase.database().ref('users/' + user.uid).set(user);
-};
 
 export const fetchUser = () => dispatch => {
   authRef.onAuthStateChanged(user => {
@@ -37,12 +39,10 @@ export const signIn = (provider) => dispatch => {
       authRef
         .signInWithPopup(GoogleProvider)
         .then(result => {
-          if (!result.user.isAnonymous) {
-            addUserInDatabase({
+            firebase.database().ref('users/' + result.user.uid).set({
               name: result.user.email || result.user.displayName,
               uid: result.user.uid
-            })
-          }
+            });
         })
         .catch(error => {
           console.log(error);
@@ -52,6 +52,10 @@ export const signIn = (provider) => dispatch => {
       authRef
         .signInWithPopup(FacebookProvider)
         .then(result => {
+            firebase.database().ref('users/' + result.user.uid).set({
+              name: result.user.email || result.user.displayName,
+              uid: result.user.uid
+            });
         })
         .catch(error => {
           console.log(error);
@@ -61,6 +65,10 @@ export const signIn = (provider) => dispatch => {
       authRef
         .signInWithPopup(GithubProvider)
         .then(result => {
+            firebase.database().ref('users/' + result.user.uid).set({
+              name: result.user.email || result.user.displayName,
+              uid: result.user.uid
+            });
         })
         .catch(error => {
           console.log(error);
@@ -87,4 +95,13 @@ export const signOut = () => dispatch => {
     .catch(error => {
       console.log(error);
     });
+};
+
+export const fetchUsers = () => async dispatch => {
+  usersRef.once("value", snapshot => {
+    dispatch({
+      type: FETCH_USERS,
+      payload: snapshot.val()
+    });
+  });
 };

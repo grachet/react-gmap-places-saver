@@ -80,6 +80,7 @@ class Home extends Component {
           textfield={["travelName", "country"]}
         />
         <UsersModal
+          users={this.props.users}
           updateProject={this.props.updateProject}
           closeUsersModal={this.closeUsersModal}
           openUsersModal={this.openUsersModal}
@@ -102,9 +103,9 @@ class Home extends Component {
 }
 
 
-const mapStateToProps = ({user, projects}) => {
+const mapStateToProps = ({user, projects, users}) => {
   return {
-    projects, currentUser: user
+    projects, currentUser: user, users
   };
 }
 
