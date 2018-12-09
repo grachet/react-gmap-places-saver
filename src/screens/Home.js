@@ -45,17 +45,18 @@ class Home extends Component {
 
   onValidateCreateProject = (project) => {
     //todo
-    const {uid, email} = this.props.currentUser;
+    const {uid, email, displayName} = this.props.currentUser;
     let id = uniqid()
     this.props.updateProject({
       ...project,
       projectId: id,
       creationTimestamp: moment().format(),
+      owner : uid,
       users: {
         [uid]: {
           "role": "Project Manager",
           uid,
-          email
+          name : email || displayName,
         }
       }
     });
@@ -77,7 +78,7 @@ class Home extends Component {
           onOk={this.onValidateCreateProject}
           title={"New travel"}
           text={"Where do you want to go ?"}
-          textfield={["travelName", "country"]}
+          textfield={[{title : "Travel name", name : "travelName"},{title : "Country", name : "country"}]}
         />
         <UsersModal
           users={this.props.users}

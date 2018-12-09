@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,7 +11,8 @@ import AddIcon from '@material-ui/icons/Add';
 import blue from '@material-ui/core/colors/blue';
 import PromptDialogue from '../components/PromptDialogue'
 import AlertDialogue from '../components/AlertDialogue'
-
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
 
 var uniqid = require('uniqid');
 var _ = require('lodash');
@@ -32,8 +31,8 @@ class SimpleDialog extends React.Component {
     openAlertRemove: false,
   }
 
-  onClickUser = (user) => {
-    this.setState({openAlertRemove: true, userIdToRemove: user})
+  onClickUser = (uid, name) => {
+    this.setState({openAlertRemove: true, userIdToRemove: uid, userNameToRemove: name})
   };
 
   onCloseRemove = () => {
@@ -54,13 +53,13 @@ class SimpleDialog extends React.Component {
 
 
   onOkAddUser = (data) => {
+    const {name} = this.props.users[data.uid]
     let user = {
-      "id": uniqid(),
-      "role": data.Role,
-      "mailId": data.Mail
+      ...data,
+      name
     }
     this.setState({openAddContact: false});
-    this.props.updateProject({...this.props.project, users: {...this.props.project.users, [user.id]: user}})
+    this.props.updateProject({...this.props.project, users: {...this.props.project.users, [data.uid]: user}})
     this.props.openUsersModal(null)
   };
 
@@ -72,11 +71,13 @@ class SimpleDialog extends React.Component {
 
   render() {
     const {classes, closeUsersModal, project, users} = this.props;
-
-    console.log("users",users);
-
-    let usersId = Object.keys(users);
-    let names = users.map(user => )
+    let usersId = [], names = [];
+    if (users) {
+      usersId = Object.keys(users);
+      for (let o of usersId) {
+        names.push(users[o].name);
+      }
+    }
 
     return (
       [<Dialog key={1} onClose={closeUsersModal}
@@ -86,13 +87,16 @@ class SimpleDialog extends React.Component {
         <div>
           <List>
             {project && _.values(project.users).map(user => (
-              <ListItem button onClick={() => this.onClickUser(user.id)} key={user.mailId}>
+              <ListItem button onClick={() => {
+                project.owner !== user.uid && this.onClickUser(user.uid, user.name)
+              }} key={user.name}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>
                     <PersonIcon/>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={user.mailId} secondary={user.role}/>
+                <ListItemText primary={user.uid === project.owner ? user.name + " (you)" : user.name}
+                              secondary={user.role}/>
               </ListItem>
             ))}
             <ListItem button onClick={() => this.onAddUser()}>
@@ -112,13 +116,16 @@ class SimpleDialog extends React.Component {
           onCancel={this.closeAddUser}
           onOk={this.onOkAddUser}
           title={"Add user on project " + (project && project.travelName)}
-          textfield={["Mail"]}
-          selectfield={[{name: "Role", values: ["Developer", "Project Manager", "Designer"]}]}
+          selectfield={[{
+            title: "User", name: "uid",
+            titleValues: names, values: usersId
+          },
+            {title: "Role", name: "role", values: ["Developer", "Project Manager", "Designer"]}]}
         />,
         <AlertDialogue
           key={3}
           open={this.state.openAlertRemove}
-          title={"Remove « " + (this.state.userIdToRemove && this.state.userIdToRemove) + " » from this project ?"}
+          title={"Remove « " + (this.state.userNameToRemove) + " » from this project ?"}
           onClose={this.onCloseRemove}
           onOk={this.onOKRemove}
         />

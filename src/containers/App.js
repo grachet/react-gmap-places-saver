@@ -53,7 +53,7 @@ class App extends Component {
 
 
     return (
-      <MuiThemeProvider theme={this.props.user && this.props.user.lightTheme ? lightTheme : darkTheme}>
+      <MuiThemeProvider theme={this.props.user && this.props.user.darkTheme ? darkTheme : lightTheme }>
         <CssBaseline />
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>

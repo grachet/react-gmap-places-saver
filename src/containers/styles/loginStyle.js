@@ -26,7 +26,9 @@ export default {
     display: "inline-block",
     padding: 30,
     textAlign: 'center',
-    marginTop: "20%",
+    marginTop: "15%",
+    marginRight:20,
+    marginLeft:20,
     backgroundColor: color.containerBackground
   },
   buttonLoginFacebook:

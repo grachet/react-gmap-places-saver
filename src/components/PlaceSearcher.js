@@ -65,11 +65,8 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, {query, isHighlighted}) {
-  console.log("suggestion", query,suggestion,isHighlighted);
   const matches = match(suggestion.properties.name, query);
   const parts = parse(suggestion.properties.name, matches);
-  console.log("matches", matches);
-  console.log("parts", parts);
 
   return (
     <MenuItem selected={isHighlighted} component="div">
@@ -121,7 +118,6 @@ class PlaceSearcher extends React.Component {
 
 
   handleSuggestionsFetchRequested = ({value}) => {
-    console.log("fetch");
     fetch("http://photon.komoot.de/api/?q=" + value + "&lang=fr&limit=4")
       .then(rep => rep.json())
       .then(data => this.setState({

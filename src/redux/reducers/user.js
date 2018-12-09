@@ -12,7 +12,7 @@ export default (state = null, action) => {
 
   switch (action.type) {
     case TOGGLE_THEME:
-      return {...state, lightTheme:!state.lightTheme};
+      return {...state, darkTheme:!state.darkTheme};
     case FETCH_USER:
       return action.payload || null;
     default:

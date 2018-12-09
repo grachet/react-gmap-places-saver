@@ -40,7 +40,7 @@ export const signIn = (provider) => dispatch => {
         .signInWithPopup(GoogleProvider)
         .then(result => {
             firebase.database().ref('users/' + result.user.uid).set({
-              name: result.user.email || result.user.displayName,
+              name: (result.user.email || result.user.displayName) + " (google)",
               uid: result.user.uid
             });
         })
@@ -53,7 +53,7 @@ export const signIn = (provider) => dispatch => {
         .signInWithPopup(FacebookProvider)
         .then(result => {
             firebase.database().ref('users/' + result.user.uid).set({
-              name: result.user.email || result.user.displayName,
+              name: (result.user.email || result.user.displayName) + " (facebook)",
               uid: result.user.uid
             });
         })
@@ -66,7 +66,7 @@ export const signIn = (provider) => dispatch => {
         .signInWithPopup(GithubProvider)
         .then(result => {
             firebase.database().ref('users/' + result.user.uid).set({
-              name: result.user.email || result.user.displayName,
+              name: (result.user.email || result.user.displayName) + " (github)",
               uid: result.user.uid
             });
         })
