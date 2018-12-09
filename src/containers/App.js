@@ -6,7 +6,7 @@ import Setting from '../screens/Setting'
 import Travel from '../screens/Travel'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import {fetchUser,fetchUsers} from "../redux/actions/user";
+import {fetchUser, fetchUsers} from "../redux/actions/user";
 import {bindActionCreators} from "redux";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {fetchProjects} from "../redux/actions/projects";
@@ -17,7 +17,6 @@ import SignIn from "../containers/SignIn"
 class App extends Component {
 
 
-
   componentWillMount() {
     this.props.fetchUser();
     this.props.fetchUsers();
@@ -26,7 +25,7 @@ class App extends Component {
 
   render() {
 
-    const darkTheme =  createMuiTheme({
+    const darkTheme = createMuiTheme({
       palette: {
         type: 'dark',
         primary: {
@@ -53,12 +52,12 @@ class App extends Component {
 
 
     return (
-      <MuiThemeProvider theme={this.props.user && this.props.user.darkTheme ? darkTheme : lightTheme }>
-        <CssBaseline />
+      <MuiThemeProvider theme={this.props.user && this.props.user.darkTheme ? darkTheme : lightTheme}>
+        <CssBaseline/>
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>
-            <Route exact path="/" component={SignIn} />
-            <Route path="/home" component={requireAuth(Home)} />
+            <Route exact path="/" component={requireAuth(Home)}/>
+            <Route path="/auth" component={SignIn}/>
             <Route path='/setting' component={requireAuth(Setting)}/>
             <Route path='/travel/:id' component={requireAuth(Travel)}/>
             <Route component={Home}/>
@@ -76,7 +75,7 @@ const mapStateToProps = ({user}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchUser, fetchProjects,fetchUsers
+  fetchUser, fetchProjects, fetchUsers
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

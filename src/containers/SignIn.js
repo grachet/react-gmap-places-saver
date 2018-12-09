@@ -13,8 +13,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 class Signin extends Component {
 
   componentWillUpdate(nextProps) {
-    if (nextProps.user) {
-      this.props.history.push('/home')
+    if (nextProps.user && nextProps.user !== "notConnected") {
+      this.props.history.push('/')
     }
   }
 

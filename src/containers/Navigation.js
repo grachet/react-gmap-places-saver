@@ -41,7 +41,7 @@ class MenuAppBar extends React.Component {
         <Toolbar>
           <Logo/>
 
-          <Typography to={"/home"}
+          <Typography to={"/"}
                       component={Link} variant="title" color="inherit" className={classes.title}>
             Maps
           </Typography>

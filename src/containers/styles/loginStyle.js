@@ -18,6 +18,10 @@ export default {
 
     color: color.text
   },
+  loader: {},
+  loaderContainer: {
+    margin: "auto"
+  },
   loginSubtitle: {
     color: color.accent,
     marginBottom: 10
@@ -27,8 +31,8 @@ export default {
     padding: 30,
     textAlign: 'center',
     marginTop: "15%",
-    marginRight:20,
-    marginLeft:20,
+    marginRight: 20,
+    marginLeft: 20,
     backgroundColor: color.containerBackground
   },
   buttonLoginFacebook:
