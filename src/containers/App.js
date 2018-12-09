@@ -20,7 +20,6 @@ class App extends Component {
   componentWillMount() {
     this.props.fetchUser();
     this.props.fetchUsers();
-    this.props.fetchProjects();
   }
 
   render() {
@@ -60,7 +59,7 @@ class App extends Component {
             <Route path="/auth" component={SignIn}/>
             <Route path='/setting' component={requireAuth(Setting)}/>
             <Route path='/travel/:id' component={requireAuth(Travel)}/>
-            <Route component={Home}/>
+            <Route component={requireAuth(Home)}/>
           </Switch>
         </Router>
       </MuiThemeProvider>
