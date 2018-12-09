@@ -74,7 +74,7 @@ class SimpleDialog extends React.Component {
     let usersId = [], names = [];
     if (users) {
       usersId = Object.keys(users);
-      _.remove(usersId,(id) => project &&  Object.keys(project.users).includes(id));
+      _.remove(usersId,(id) => project && project.users &&  Object.keys(project.users).includes(id));
       for (let o of usersId) {
           names.push(users[o].name);
       }
@@ -88,9 +88,7 @@ class SimpleDialog extends React.Component {
         <div>
           <List>
             {project && _.values(project.users).map(user => (
-              <ListItem button onClick={() => {
-                project.owner !== user.uid && this.onClickUser(user.uid, user.name)
-              }} key={user.name}>
+              <ListItem button onClick={() => this.onClickUser(user.uid, user.name)} key={user.name}>
                 <ListItemAvatar>
                   <Avatar className={classes.avatar}>
                     <PersonIcon/>

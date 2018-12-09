@@ -9,9 +9,8 @@ export const removeProject = removeProjectId => async dispatch => {
   projectsRef.child(removeProjectId).remove();
 };
 
-export const fetchProjects = () => async dispatch => {
-
-  projectsRef.on("value", snapshot => {
+export const fetchProjects = (userId) => async dispatch => {
+  projectsRef.orderByChild("users/"+userId).startAt("").on("value", snapshot => {
     dispatch({
       type: FETCH_PROJECTS,
       payload: snapshot.val()
