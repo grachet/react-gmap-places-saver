@@ -11,7 +11,9 @@ class Loader extends Component {
 
     const {classes} = this.props;
 
-    return <PulseLoader color={color.background} size="40px" margin="4px" className={classes.loaderContainer}/>
+    return <div className={classes.loaderContainer}>
+      <PulseLoader color={color.background} size="40px" margin="4px" className={classes.loader}/>
+    </div>
   }
 }
 

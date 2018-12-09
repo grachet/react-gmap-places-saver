@@ -10,6 +10,7 @@ export const removeProject = removeProjectId => async dispatch => {
 };
 
 export const fetchProjects = () => async dispatch => {
+
   projectsRef.on("value", snapshot => {
     dispatch({
       type: FETCH_PROJECTS,

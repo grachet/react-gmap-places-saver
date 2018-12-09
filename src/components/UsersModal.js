@@ -74,8 +74,9 @@ class SimpleDialog extends React.Component {
     let usersId = [], names = [];
     if (users) {
       usersId = Object.keys(users);
+      _.remove(usersId,(id) => project &&  Object.keys(project.users).includes(id));
       for (let o of usersId) {
-        names.push(users[o].name);
+          names.push(users[o].name);
       }
     }
 
