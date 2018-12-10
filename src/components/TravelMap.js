@@ -1,17 +1,35 @@
 import React, {Component} from 'react'
-import Map from 'pigeon-maps'
-import Marker from 'pigeon-marker'
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import MarkerMap from './MarkerMap'
+
+import ReactMapGL, {Marker} from 'react-map-gl';
+import {mapBoxKey} from '../config/keys'
 
 export default class TravelMap extends Component {
   state = {
-    lat: 51.505,
-    lng: -0.09,
-    zoom: 13,
+    viewport: {
+      width: "100%",
+      height: "100%",
+      latitude: 37.7577,
+      longitude: -122.4376,
+      zoom: 8
+    },
     openAlert: false,
     messageAlert: null
+  }
+
+  _renderMarker = (place, index) => {
+    return (
+      <Marker
+        key={`marker-${index}`}
+        longitude={place.geometry.coordinates[0]}
+        latitude={place.geometry.coordinates[1]}>
+        <MarkerMap size={20}
+                   onClick={() => this.open([place.name, place.properties.city, place.properties.country].filter(Boolean).join(" - "))}/>
+      </Marker>
+    );
   }
 
   close = () => {
@@ -24,17 +42,22 @@ export default class TravelMap extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng]
-    const {project} = this.props
+    const {project, user} = this.props
+
+    let mapStyle = (user.mapStyle === "default" || !user.mapStyle) ? user.darkTheme ? "mapbox://styles/mapbox/dark-v9" : "mapbox://styles/mapbox/light-v9"
+      :  "mapbox://styles/mapbox/" + user.mapStyle + "-v9"
     return (
 
       [<div style={{height: "100vh", width: "100%", margin: 0}}>
-        <Map center={position} zoom={this.state.zoom}>
+        <ReactMapGL
+          mapStyle={mapStyle}
+          mapboxApiAccessToken={mapBoxKey}
+          {...this.state.viewport}
+          onViewportChange={(viewport) => this.setState({viewport})}>
           {project && project.places && Object.values(project.places).map(
-            place => <Marker anchor={place.geometry.coordinates} payload={1} onClick={({event, anchor, payload}) => {
-              this.open([place.name, place.properties.city ,place.properties.country].filter(Boolean).join(" - "))
-            }}/>
+            (place, index) => this._renderMarker(place, index)
           )}
-        </Map>
+        </ReactMapGL>
       </div>,
         <Snackbar
           anchorOrigin={{

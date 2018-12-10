@@ -8,3 +8,6 @@ export const REMOVE_PROJECT = "REMOVE_PROJECT";
 export const TOGGLE_THEME = "TOGGLE_THEME";
 export const FETCH_USER = "FETCH_USER";
 export const FETCH_USERS = "FETCH_USERS";
+export const SET_MAP_STYLE = "SET_MAP_STYLE";
+
+

@@ -56,7 +56,7 @@ class Home extends Component {
                        <PlaceSearcher updateProject={this.props.updateProject} project={project} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={8} xl={9}>
-                        {this.state.mapsVisible && <TravelMap project={project} {...defaultProps}/>}
+                        {this.state.mapsVisible && <TravelMap user={this.props.user} project={project} {...defaultProps}/>}
                         {!this.state.mapsVisible && <TravelGrid updateProject={this.props.updateProject} project={project}/>}
                     </Grid>
                 </Grid>
@@ -68,7 +68,7 @@ class Home extends Component {
 
 const mapStateToProps = ({user, projects}) => {
     return {
-        projects, currentUser: user
+        projects,  user
     };
 }
 

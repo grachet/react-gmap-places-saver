@@ -1,4 +1,4 @@
-import {FETCH_USERS, FETCH_USER, TOGGLE_THEME} from './action.types'
+import {FETCH_USERS, FETCH_USER, TOGGLE_THEME,SET_MAP_STYLE} from './action.types'
 import {
   authRef,
   FacebookProvider,
@@ -9,6 +9,13 @@ import {
 import {fetchProjects} from './projects'
 import * as firebase from "firebase";
 
+
+export function setMapStyle(mapStyle) {
+  return {
+    type: SET_MAP_STYLE,
+    payload: {mapStyle}
+  }
+}
 
 export function toggleTheme() {
   return {

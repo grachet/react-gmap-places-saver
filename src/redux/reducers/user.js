@@ -1,4 +1,4 @@
-import {FETCH_USER, TOGGLE_THEME} from "../actions/action.types";
+import {FETCH_USER, SET_MAP_STYLE, TOGGLE_THEME} from "../actions/action.types";
 
 
 export default (state = null, action) => {
@@ -12,9 +12,11 @@ export default (state = null, action) => {
 
   switch (action.type) {
     case TOGGLE_THEME:
-      return {...state, darkTheme:!state.darkTheme};
+      return {...state, darkTheme: !state.darkTheme};
     case FETCH_USER:
       return action.payload || null;
+    case SET_MAP_STYLE:
+      return {...state, mapStyle: a.mapStyle};
     default:
       return state;
   }
