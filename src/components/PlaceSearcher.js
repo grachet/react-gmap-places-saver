@@ -161,8 +161,6 @@ class PlaceSearcher extends React.Component {
           }}
         />
       </div>
-
-
     )
   }
 
@@ -197,6 +195,9 @@ class PlaceSearcher extends React.Component {
     let newProject = {...this.props.project, places : {...this.props.project.places, [this.place.properties.osm_id]:{...this.place,pid: this.place.properties.osm_id,...newValues}}}
     this.props.updateProject(newProject)
     this.place = null
+    this.setState({
+      searchValue: "",
+    });
   }
 
   render() {

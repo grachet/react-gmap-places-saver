@@ -9,8 +9,7 @@ const style = {
   },
   root: {
     padding: 20,
-    marginTop: 100,
-    flexGrow: 1,
+    marginTop: 80,
   },
   container: {
     position: 'relative',

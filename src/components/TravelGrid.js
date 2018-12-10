@@ -22,8 +22,9 @@ const styles = {
   containerTravelGrid: {
     paddingLeft: 20,
     paddingRight : 20,
+    marginTop: 100,
     flexGrow: 1,
-  }
+  },
 };
 
 class TravelGrid extends React.Component {

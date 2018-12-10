@@ -51,7 +51,7 @@ class Home extends Component {
                     {this.state.mapsVisible && <NoMapIcon/>}
                     {!this.state.mapsVisible && <MapIcon/>}
                 </Button>
-                <Grid container spacing={24}>
+                <Grid container>
                     <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
                        <PlaceSearcher updateProject={this.props.updateProject} project={project} />
                     </Grid>

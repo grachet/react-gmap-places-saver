@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import LightIcon from '@material-ui/icons/Opacity';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import HighlightOff from '@material-ui/icons/HighlightOff';
 
 import SettingsIcon from '@material-ui/icons/Settings';
 import Logo from '@material-ui/icons/PinDrop';
@@ -59,7 +59,7 @@ class MenuAppBar extends React.Component {
             color="inherit"
             onClick={() => this.props.signOut()}
           >
-            <AccountCircle/>
+            <HighlightOff/>
           </IconButton>
           <IconButton
             to={"/setting"}

@@ -90,7 +90,7 @@ class Home extends Component {
           project={this.props.projects && this.props.projects[this.projectId]}
           open={this.state.openUsersModal}/>
         <Typography variant="display1" className={classes.myl} color="textPrimary">My travels</Typography>
-        <Grid container className={classes.cardContainer} spacing={24}>
+        <Grid container spacing={24}>
           {projects && _.orderBy(_.values(projects), function (o) {
             return new moment(o.creationTimestamp);
           }, ['asc']).map(project => <Grid key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
