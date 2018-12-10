@@ -10,7 +10,7 @@ import {withStyles} from '@material-ui/core/styles';
 import fetch from "cross-fetch";
 import * as Yup from "yup";
 import {Field, Form, Formik} from "formik";
-import {Select as SelectMUI, TextField as TextFieldMUI} from "formik-material-ui";
+import {TextField as TextFieldMUI} from "formik-material-ui";
 import {DatePicker} from 'material-ui-pickers';
 import Button from "@material-ui/core/Button/Button";
 import styles from "./styles/placeStyle"
@@ -84,18 +84,26 @@ function shouldRenderSuggestions(value) {
 }
 
 function getSuggestionValue(suggestion) {
-  console.log(suggestion) //todo
+  this.place = suggestion
   return suggestion.properties.name;
 }
 
 class PlaceSearcher extends React.Component {
 
-  state = {
-    searchValue: '',
-    suggestions: [],
-  };
 
-  renderTextfield = (name,title,notRequired,multiline) => {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchValue: '',
+      suggestions: [],
+    };
+    this.place = null
+  }
+
+
+
+  renderTextfield = (name, title, notRequired, multiline) => {
     return (
       <div className={this.props.classes.fieldContainer} key={title}>
         <Field
@@ -112,7 +120,7 @@ class PlaceSearcher extends React.Component {
     )
   }
 
-  renderDateTime = (name,title) => {
+  renderDateTime = (name, title) => {
     return (
       <div className={this.props.classes.fieldContainer} key={title}>
         <Field
@@ -141,7 +149,9 @@ class PlaceSearcher extends React.Component {
                     : []
                 }
                 disableOpenOnEnter
-                onChange={value => {setFieldValue(name, value);}}
+                onChange={value => {
+                  setFieldValue(name, value);
+                }}
                 value={value}
                 animateYearScrolling={false}
               />
@@ -177,7 +187,11 @@ class PlaceSearcher extends React.Component {
     });
   };
 
+  savePlace = (values) => {
 
+
+    this.place = null
+  }
 
   render() {
     const {classes} = this.props;
@@ -218,29 +232,39 @@ class PlaceSearcher extends React.Component {
         <Formik
           validateOnBlur={true}
           validateOnChange={false}
-          onSubmit={(values, {setSubmitting}) => {
-            alert(values)
+          initialValues={{
+            name: '',
+            description: "",
+            arrival: new Date(),
+            departure: new Date(),
+
+          }}
+          onSubmit={(values, {resetForm, setSubmitting}) => {
+            this.savePlace(values);
             setSubmitting(false);
+            resetForm()
           }}
           validationSchema={Yup.object().shape(
             {}
           )}
         >
-          {({values}) => (
+          {({values, submitForm}) => (
             <Form>
-              {this.renderTextfield("name","Name",true)}
-              {this.renderTextfield("description","Description",false,true)}
+              {this.renderTextfield("name", "Name", true)}
+              {this.renderTextfield("description", "Description", false, true)}
               <Grid container className={classes.fieldContainer} spacing={24}>
                 <Grid className={classes.field} item xs={6}>
-                  {this.renderDateTime("arrival","Arrival")}
+                  {this.renderDateTime("arrival", "Arrival")}
                 </Grid>
                 <Grid className={classes.field} item xs={6}>
-                  {this.renderDateTime("departure","Departure")}
+                  {this.renderDateTime("departure", "Departure")}
                 </Grid>
               </Grid>
 
-              <Button submit variant="contained" className={classes.mymd} color="secondary">
-                      Add Place
+              <Button submit onClick={() => {
+                this.place && submitForm()
+              }} variant="contained" className={classes.mymd} color="secondary">
+                Add Place
               </Button>
 
             </Form>
