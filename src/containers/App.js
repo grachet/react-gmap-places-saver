@@ -28,6 +28,9 @@ class App extends Component {
   render() {
 
     const darkTheme = createMuiTheme({
+      typography: {
+        useNextVariants: true,
+      },
       palette: {
         type: 'dark',
         primary: {
@@ -40,6 +43,9 @@ class App extends Component {
     })
 
     const lightTheme = createMuiTheme({
+      typography: {
+        useNextVariants: true,
+      },
       palette: {
         type: "light",
         primary: {

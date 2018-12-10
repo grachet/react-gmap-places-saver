@@ -2,7 +2,11 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid/Grid";
+import PlaceCard from "./PlaceCard"
 
+var _ = require('lodash');
+var moment = require('moment');
 
 const styles = {
   grow: {
@@ -15,25 +19,32 @@ const styles = {
     textDecoration: 'none',
     flexGrow: 1,
   },
-  containerTravelGrid:{
-    backgroundColor: "blue",
+  containerTravelGrid: {
+    paddingLeft: 20,
+    paddingRight : 20,
     flexGrow: 1,
   }
 };
 
-class MenuAppBar extends React.Component {
+class TravelGrid extends React.Component {
 
   render() {
-    const {classes} = this.props;
+    const {classes, project, updateProject} = this.props;
 
     return (
-      <div className={classes.containerTravelGrid}></div>
+      <Grid container className={classes.containerTravelGrid} spacing={24}>
+        {project && project.places && _.orderBy(_.values(project.places), function (o) {
+          return new moment(o.arrival);
+        }, ['asc']).map(place => <Grid key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
+          <PlaceCard updateProject={updateProject} project={project} place={place}/>
+        </Grid>)}
+      </Grid>
     );
   }
 }
 
-MenuAppBar.propTypes = {
+TravelGrid.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MenuAppBar);
+export default withStyles(styles)(TravelGrid);

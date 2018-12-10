@@ -52,7 +52,7 @@ class Home extends Component {
       projectId: id,
       creationTimestamp: moment().format(),
       owner : uid,
-      travels : {},
+      places : {},
       users: {
         [uid]: {
           "role": "Project Manager",

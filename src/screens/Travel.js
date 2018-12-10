@@ -13,7 +13,7 @@ import PlaceSearcher from '../components/PlaceSearcher'
 import TravelMap from '../components/TravelMap'
 import TravelGrid from '../components/TravelGrid'
 import {bindActionCreators} from 'redux';
-import {addUserToProject, createProject, deleteProject, removeUserFromProject} from '../redux/actions/projects'
+import {updateProject} from '../redux/actions/projects'
 import PromptDialogue from '../components/PromptDialogue'
 import UsersModal from '../components/UsersModal'
 
@@ -53,11 +53,11 @@ class Home extends Component {
                 </Button>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-                       <PlaceSearcher/>
+                       <PlaceSearcher updateProject={this.props.updateProject} project={project} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={8} xl={9}>
-                        {this.state.mapsVisible && <TravelMap {...defaultProps}/>}
-                        {!this.state.mapsVisible && <TravelGrid/>}
+                        {this.state.mapsVisible && <TravelMap project={project} {...defaultProps}/>}
+                        {!this.state.mapsVisible && <TravelGrid updateProject={this.props.updateProject} project={project}/>}
                     </Grid>
                 </Grid>
             </div>
@@ -72,7 +72,9 @@ const mapStateToProps = ({user, projects}) => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateProject
+}, dispatch);
 
 export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Home));
 

@@ -14,6 +14,8 @@ import {TextField as TextFieldMUI} from "formik-material-ui";
 import {DatePicker} from 'material-ui-pickers';
 import Button from "@material-ui/core/Button/Button";
 import styles from "./styles/placeStyle"
+import DateFnsUtils from '@date-io/date-fns';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 import Grid from '@material-ui/core/Grid';
 
@@ -83,14 +85,14 @@ function shouldRenderSuggestions(value) {
   return value.trim().length > 2;
 }
 
-function getSuggestionValue(suggestion) {
-  this.place = suggestion
-  return suggestion.properties.name;
-}
+
 
 class PlaceSearcher extends React.Component {
 
-
+  getSuggestionValue = (suggestion) => {
+    this.place = suggestion;
+    return suggestion.properties.name;
+  }
 
   constructor(props) {
     super(props)
@@ -188,8 +190,12 @@ class PlaceSearcher extends React.Component {
   };
 
   savePlace = (values) => {
-
-
+    let newValues = {...values};
+    newValues.arrival ? newValues.arrival = newValues.arrival.getTime() : newValues.arrival = Date.now();
+    newValues.departure ? newValues.departure = newValues.departure.getTime() : newValues.departure = Date.now();
+    console.log("newValues", newValues);
+    let newProject = {...this.props.project, places : {...this.props.project.places, [this.place.properties.osm_id]:{...this.place,pid: this.place.properties.osm_id,...newValues}}}
+    this.props.updateProject(newProject)
     this.place = null
   }
 
@@ -202,7 +208,7 @@ class PlaceSearcher extends React.Component {
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       shouldRenderSuggestions,
-      getSuggestionValue,
+      getSuggestionValue : this.getSuggestionValue,
       renderSuggestion,
     };
 
