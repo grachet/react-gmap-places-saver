@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -9,35 +8,14 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from '@material-ui/core/styles';
 import fetch from "cross-fetch";
+import * as Yup from "yup";
+import {Field, Form, Formik} from "formik";
+import {Select as SelectMUI, TextField as TextFieldMUI} from "formik-material-ui";
+import {DatePicker} from 'material-ui-pickers';
+import Button from "@material-ui/core/Button/Button";
+import styles from "./styles/placeStyle"
 
-const styles = theme => ({
-  root: {
-    padding: 20,
-    marginTop: 100,
-    flexGrow: 1,
-  },
-  container: {
-    position: 'relative',
-  },
-  suggestionsContainerOpen: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0,
-  },
-  suggestion: {
-    display: 'block',
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none',
-  },
-  divider: {
-    height: theme.spacing.unit * 2,
-  },
-});
+import Grid from '@material-ui/core/Grid';
 
 function renderInputComponent(inputProps) {
   const {
@@ -47,7 +25,9 @@ function renderInputComponent(inputProps) {
 
   return (
     <TextField
+      margin="normal"
       autoFocus
+      required
       variant={"filled"}
       fullWidth
       InputProps={{
@@ -84,7 +64,7 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
         })}
 
         <strong key={1} style={{fontWeight: 300}}>
-          {" "}  - {suggestion.properties.country}
+          {" "} - {suggestion.properties.country}
         </strong>
       </div>
     </MenuItem>
@@ -108,7 +88,6 @@ function getSuggestionValue(suggestion) {
   return suggestion.properties.name;
 }
 
-
 class PlaceSearcher extends React.Component {
 
   state = {
@@ -116,6 +95,64 @@ class PlaceSearcher extends React.Component {
     suggestions: [],
   };
 
+  renderTextfield = (name,title,notRequired,multiline) => {
+    return (
+      <div className={this.props.classes.fieldContainer} key={title}>
+        <Field
+          required={!notRequired}
+          className={this.props.classes.field}
+          margin="normal"
+          multiline={multiline}
+          variant={"filled"}
+          label={title}
+          name={name}
+          component={TextFieldMUI}
+        />
+      </div>
+    )
+  }
+
+  renderDateTime = (name,title) => {
+    return (
+      <div className={this.props.classes.fieldContainer} key={title}>
+        <Field
+          name={name}
+          render={({
+                     form: {setFieldValue},
+                     field: {value, name},
+                     ...rest
+                   }) => {
+            return (
+              <DatePicker
+                margin="normal"
+                name={name}
+                required
+                className={this.props.classes.field}
+                keyboard
+                clearable
+                variant={"filled"}
+                autoOk
+                label={title}
+                format="dd/MM/yyyy"
+                placeholder="01/01/2018"
+                mask={value =>
+                  value
+                    ? [/[0-3]/, /\d/, "/", /0|1/, /\d/, "/", /1|2/, /\d/, /\d/, /\d/]
+                    : []
+                }
+                disableOpenOnEnter
+                onChange={value => {setFieldValue(name, value);}}
+                value={value}
+                animateYearScrolling={false}
+              />
+            );
+          }}
+        />
+      </div>
+
+
+    )
+  }
 
   handleSuggestionsFetchRequested = ({value}) => {
     fetch("http://photon.komoot.de/api/?q=" + value + "&lang=fr&limit=4")
@@ -139,6 +176,8 @@ class PlaceSearcher extends React.Component {
       searchValue: newValue,
     });
   };
+
+
 
   render() {
     const {classes} = this.props;
@@ -175,6 +214,39 @@ class PlaceSearcher extends React.Component {
             </Paper>
           )}
         />
+
+        <Formik
+          validateOnBlur={true}
+          validateOnChange={false}
+          onSubmit={(values, {setSubmitting}) => {
+            alert(values)
+            setSubmitting(false);
+          }}
+          validationSchema={Yup.object().shape(
+            {}
+          )}
+        >
+          {({values}) => (
+            <Form>
+              {this.renderTextfield("name","Name",true)}
+              {this.renderTextfield("description","Description",false,true)}
+              <Grid container className={classes.fieldContainer} spacing={24}>
+                <Grid className={classes.field} item xs={6}>
+                  {this.renderDateTime("arrival","Arrival")}
+                </Grid>
+                <Grid className={classes.field} item xs={6}>
+                  {this.renderDateTime("departure","Departure")}
+                </Grid>
+              </Grid>
+
+              <Button submit variant="contained" className={classes.mymd} color="secondary">
+                      Add Place
+              </Button>
+
+            </Form>
+          )}
+        </Formik>
+
       </div>
     );
   }

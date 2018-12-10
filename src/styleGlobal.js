@@ -38,10 +38,28 @@ const baseStyles = {
   mbmd: {
     marginBottom: 15
   },
+  mrl: {
+    marginRight: 30
+  },
+  mtl: {
+    marginTop: 30
+  },
+  mll: {
+    marginLeft: 30
+  },
+  mbl: {
+    marginBottom: 30
+  },
+  mbxl: {
+    marginBottom: 45
+  },
   mxl: {
     marginLeft: 30,
     marginRight: 30
-
+  },
+  mymd: {
+    marginTop: 15,
+    marginBottom: 15
   },
   myl: {
     marginTop: 30,

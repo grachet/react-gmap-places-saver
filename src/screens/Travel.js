@@ -36,6 +36,9 @@ class Home extends Component {
     render() {
         const {id} = this.props.match.params;
         const {classes, projects} = this.props;
+
+        if (!projects) {return null}
+
         let project = projects[id];
         const {travelName, country} = project;
         return (

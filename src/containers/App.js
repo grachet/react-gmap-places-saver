@@ -13,6 +13,9 @@ import {fetchProjects} from "../redux/actions/projects";
 import {color} from '../data/color'
 import requireAuth from "../containers/requireAuth";
 import SignIn from "../containers/SignIn"
+import {MuiPickersUtilsProvider} from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
 
 class App extends Component {
 
@@ -53,6 +56,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={this.props.user && this.props.user.darkTheme ? darkTheme : lightTheme}>
         <CssBaseline/>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Router basename={`${process.env.PUBLIC_URL}/`}>
           <Switch>
             <Route exact path="/" component={requireAuth(Home)}/>
@@ -62,6 +66,7 @@ class App extends Component {
             <Route component={requireAuth(Home)}/>
           </Switch>
         </Router>
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     );
   }
