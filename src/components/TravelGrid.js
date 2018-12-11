@@ -23,7 +23,7 @@ const styles = {
     paddingLeft: 20,
     paddingRight : 20,
     marginTop: 100,
-    flexGrow: 1,
+    width : "100%"
   },
 };
 
@@ -33,7 +33,7 @@ class TravelGrid extends React.Component {
     const {classes, project, updateProject} = this.props;
 
     return (
-      <Grid container className={classes.containerTravelGrid} spacing={24}>
+      <Grid container spacing={24} className={classes.containerTravelGrid}>
         {project && project.places && _.orderBy(_.values(project.places), function (o) {
           return new moment(o.arrival);
         }, ['asc']).map(place => <Grid key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
