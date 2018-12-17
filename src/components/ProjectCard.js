@@ -52,7 +52,7 @@ class ProjectCard extends Component {
     const {anchorMenu} = this.state;
     return (
       <Card>
-        <CardActionArea to={"/travel/"+this.props.project.projectId}
+        <CardActionArea to={"/travel/" + this.props.project.projectId}
                         component={Link} className={classes.wmax}>
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">

@@ -21,9 +21,9 @@ const styles = {
   },
   containerTravelGrid: {
     paddingLeft: 20,
-    paddingRight : 20,
+    paddingRight: 20,
     marginTop: 100,
-    width : "100%"
+    width: "100%"
   },
 };
 

@@ -53,8 +53,8 @@ const baseStyles = {
   mbxl: {
     marginBottom: 45
   },
-  mtnav : {
-    marginTop : 64
+  mtnav: {
+    marginTop: 64
   },
   mxl: {
     marginLeft: 30,
@@ -72,7 +72,7 @@ const baseStyles = {
     position: 'fixed',
     bottom: 80,
     right: 80,
-    zIndex:1000
+    zIndex: 1000
   }
 
 

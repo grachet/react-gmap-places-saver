@@ -108,8 +108,9 @@ export default class FormDialog extends React.Component {
                         }}
                         component={SelectMUI}
                       >
-                        {field.values.map((value,index) =>
-                          <MenuItem key={value} value={value}>{field.titleValues ? field.titleValues[index] : value}</MenuItem>)
+                        {field.values.map((value, index) =>
+                          <MenuItem key={value}
+                                    value={value}>{field.titleValues ? field.titleValues[index] : value}</MenuItem>)
                         }
                       </Field>
                     </FormControl>

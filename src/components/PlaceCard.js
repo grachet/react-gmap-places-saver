@@ -49,7 +49,7 @@ class PlaceCard extends Component {
               {place.name || place.properties.city}
             </Typography>
             <Typography gutterBottom component="p">
-              {place.name &&  place.properties.city ? place.properties.city + " - " + place.properties.country : place.properties.country}
+              {place.name && place.properties.city ? place.properties.city + " - " + place.properties.country : place.properties.country}
             </Typography>
             <Typography gutterBottom component="p">
               {place.description}
@@ -58,7 +58,7 @@ class PlaceCard extends Component {
               Arrival : {moment(place.arrival).format("ddd, MMM Do")}
             </Typography>
             <Typography component="p">
-             Departure : {moment(place.departure).format("ddd, MMM Do")}
+              Departure : {moment(place.departure).format("ddd, MMM Do")}
             </Typography>
           </CardContent>
         </CardActionArea>

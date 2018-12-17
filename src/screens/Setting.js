@@ -4,16 +4,17 @@ import styles from './styles/settingStyle'
 import {withStyles} from '@material-ui/core/styles';
 import {bindActionCreators} from "redux";
 import connect from "react-redux/es/connect/connect";
-import {toggleTheme,setMapStyle} from '../redux/actions/user'
+import {setMapStyle, toggleTheme} from '../redux/actions/user'
 import Typography from "@material-ui/core/Typography/Typography";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from "@material-ui/core/Button/Button";
+import SaveIcon from '@material-ui/icons/Check';
 
 class Setting extends Component {
 
@@ -24,6 +25,11 @@ class Setting extends Component {
     return (
       <div className={classes.container}>
         <Navigation/>
+        <Button onClick={() => window.history.back()} variant="fab"
+                color="secondary" aria-label="Add"
+                className={classes.fab}>
+          <SaveIcon/>
+        </Button>
         <Typography variant="h4" className={classes.myl} color="textPrimary">My settings</Typography>
         {this.props.user && <FormGroup row>
           <FormControlLabel
@@ -37,7 +43,7 @@ class Setting extends Component {
           />
         </FormGroup>
         }
-        {this.props.user &&  <FormControl margin={"normal"} style={{minWidth: 150}}>
+        {this.props.user && <FormControl margin={"normal"} style={{minWidth: 150}}>
           <InputLabel htmlFor="mapStyle">Map Style</InputLabel>
           <Select
             value={this.props.user.mapStyle}

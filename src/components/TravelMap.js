@@ -45,7 +45,7 @@ export default class TravelMap extends Component {
     const {project, user} = this.props
 
     let mapStyle = (user.mapStyle === "default" || !user.mapStyle) ? user.darkTheme ? "mapbox://styles/mapbox/dark-v9" : "mapbox://styles/mapbox/light-v9"
-      :  "mapbox://styles/mapbox/" + user.mapStyle + "-v9"
+      : "mapbox://styles/mapbox/" + user.mapStyle + "-v9"
     return (
 
       [<div style={{height: "100vh", width: "100%", margin: 0}}>

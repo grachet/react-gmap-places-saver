@@ -1,4 +1,4 @@
-import {ADD_PROJECT, FETCH_PROJECTS, REMOVE_PROJECT, UPDATE_PROJECT} from '../actions/action.types'
+import {FETCH_PROJECTS} from '../actions/action.types'
 
 export default (state = null, action) => {
 

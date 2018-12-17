@@ -14,8 +14,6 @@ import {TextField as TextFieldMUI} from "formik-material-ui";
 import {DatePicker} from 'material-ui-pickers';
 import Button from "@material-ui/core/Button/Button";
 import styles from "./styles/placeStyle"
-import DateFnsUtils from '@date-io/date-fns';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 import Grid from '@material-ui/core/Grid';
 
@@ -86,25 +84,12 @@ function shouldRenderSuggestions(value) {
 }
 
 
-
 class PlaceSearcher extends React.Component {
 
   getSuggestionValue = (suggestion) => {
     this.place = suggestion;
     return suggestion.properties.name;
   }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      searchValue: '',
-      suggestions: [],
-    };
-    this.place = null
-  }
-
-
-
   renderTextfield = (name, title, notRequired, multiline) => {
     return (
       <div className={this.props.classes.fieldContainer} key={title}>
@@ -121,7 +106,6 @@ class PlaceSearcher extends React.Component {
       </div>
     )
   }
-
   renderDateTime = (name, title) => {
     return (
       <div className={this.props.classes.fieldContainer} key={title}>
@@ -163,7 +147,6 @@ class PlaceSearcher extends React.Component {
       </div>
     )
   }
-
   handleSuggestionsFetchRequested = ({value}) => {
     fetch("https://photon.komoot.de/api/?q=" + value + "&lang=fr&limit=4")
       .then(rep => rep.json())
@@ -174,31 +157,42 @@ class PlaceSearcher extends React.Component {
         console.error(error);
       });
   };
-
   handleSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     });
   };
-
   handleChange = () => (event, {newValue}) => {
     this.setState({
       searchValue: newValue,
     });
   };
-
   savePlace = (values) => {
     let newValues = {...values};
     this.props.changePlace(this.place);
     newValues.arrival ? newValues.arrival = newValues.arrival.getTime() : newValues.arrival = Date.now();
     newValues.departure ? newValues.departure = newValues.departure.getTime() : newValues.departure = Date.now();
-    let newProject = {...this.props.project, places : {...this.props.project.places, [this.place.properties.osm_id]:{...this.place,pid: this.place.properties.osm_id,...newValues}}}
+    let newProject = {...this.props.project,
+      places: {
+        ...this.props.project.places,
+        [this.place.properties.osm_id]: {...this.place, pid: this.place.properties.osm_id, ...newValues}
+      }
+    }
     this.props.updateProject(newProject)
     this.place = null
     this.setState({
       searchValue: "",
     });
 
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchValue: '',
+      suggestions: [],
+    };
+    this.place = null
   }
 
   render() {
@@ -210,7 +204,7 @@ class PlaceSearcher extends React.Component {
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       shouldRenderSuggestions,
-      getSuggestionValue : this.getSuggestionValue,
+      getSuggestionValue: this.getSuggestionValue,
       renderSuggestion,
     };
 

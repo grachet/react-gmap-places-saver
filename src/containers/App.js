@@ -63,15 +63,15 @@ class App extends Component {
       <MuiThemeProvider theme={this.props.user && this.props.user.darkTheme ? darkTheme : lightTheme}>
         <CssBaseline/>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Router basename={`${process.env.PUBLIC_URL}/`}>
-          <Switch>
-            <Route exact path="/" component={requireAuth(Home)}/>
-            <Route path="/auth" component={SignIn}/>
-            <Route path='/setting' component={requireAuth(Setting)}/>
-            <Route path='/travel/:id' component={requireAuth(Travel)}/>
-            <Route component={requireAuth(Home)}/>
-          </Switch>
-        </Router>
+          <Router basename={`${process.env.PUBLIC_URL}/`}>
+            <Switch>
+              <Route exact path="/" component={requireAuth(Home)}/>
+              <Route path="/auth" component={SignIn}/>
+              <Route path='/setting' component={requireAuth(Setting)}/>
+              <Route path='/travel/:id' component={requireAuth(Travel)}/>
+              <Route component={requireAuth(Home)}/>
+            </Switch>
+          </Router>
         </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     );
