@@ -11,7 +11,7 @@ import PlaceSearcher from '../components/PlaceSearcher'
 import TravelGrid from '../components/TravelGrid'
 import {bindActionCreators} from 'redux';
 import {updateProject} from '../redux/actions/projects'
-import ReactMapGL, {Marker} from 'react-map-gl';
+import ReactMapGL, {FlyToInterpolator, Marker} from 'react-map-gl';
 import MarkerMap from "../components/MarkerMap";
 import {mapBoxKey} from "../config/dev";
 import IconButton from "@material-ui/core/IconButton/IconButton";
@@ -32,7 +32,8 @@ class Home extends Component {
       height: "100%",
       longitude: 2.3514992,
       latitude: 48.8566101,
-      zoom: 9
+      zoom: 9,
+      pitch: 85
     },
     mapsVisible: true,
     openAlert: false,
@@ -47,6 +48,9 @@ class Home extends Component {
         ...this.state.viewport,
         latitude: place.geometry.coordinates[1],
         longitude: place.geometry.coordinates[0],
+        zoom: 9,
+        transitionDuration: 5000,
+        transitionInterpolator: new FlyToInterpolator(),
       }
     })
   }
