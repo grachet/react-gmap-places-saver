@@ -165,7 +165,7 @@ class PlaceSearcher extends React.Component {
   }
 
   handleSuggestionsFetchRequested = ({value}) => {
-    fetch("http://photon.komoot.de/api/?q=" + value + "&lang=fr&limit=4")
+    fetch("https://photon.komoot.de/api/?q=" + value + "&lang=fr&limit=4")
       .then(rep => rep.json())
       .then(data => this.setState({
         suggestions: getSuggestions(data),
