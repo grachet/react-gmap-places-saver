@@ -189,15 +189,16 @@ class PlaceSearcher extends React.Component {
 
   savePlace = (values) => {
     let newValues = {...values};
+    this.props.changePlace(this.place);
     newValues.arrival ? newValues.arrival = newValues.arrival.getTime() : newValues.arrival = Date.now();
     newValues.departure ? newValues.departure = newValues.departure.getTime() : newValues.departure = Date.now();
-    console.log("newValues", newValues);
     let newProject = {...this.props.project, places : {...this.props.project.places, [this.place.properties.osm_id]:{...this.place,pid: this.place.properties.osm_id,...newValues}}}
     this.props.updateProject(newProject)
     this.place = null
     this.setState({
       searchValue: "",
     });
+
   }
 
   render() {
