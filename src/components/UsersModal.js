@@ -115,11 +115,12 @@ class SimpleDialog extends React.Component {
           onCancel={this.closeAddUser}
           onOk={this.onOkAddUser}
           title={"Add user on project " + (project && project.travelName)}
-          selectfield={[{
+          textfield={[{
             title: "User", name: "uid",
             titleValues: names, values: usersId
-          },
-            {title: "Role", name: "role", values: ["Developer", "Project Manager", "Designer"]}]}
+          }]}
+          selectfield={[
+            {title: "Role", name: "role", values: ["Dad", "Mom", "Son", "Grand-Parents", "Friend", "Daughter"]}]}
         />,
         <AlertDialogue
           key={3}
