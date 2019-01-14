@@ -9,7 +9,7 @@ import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import blue from '@material-ui/core/colors/blue';
-import PromptDialogue from '../components/PromptDialogue'
+import AddUserModal from '../components/AddUserModal'
 import AlertDialogue from '../components/AlertDialogue'
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
@@ -109,18 +109,14 @@ class SimpleDialog extends React.Component {
           </List>
         </div>
       </Dialog>,
-        <PromptDialogue
+        <AddUserModal
           key={2}
+          title={"Add user on project " + (project && project.travelName)}
           open={this.state.openAddContact}
           onCancel={this.closeAddUser}
           onOk={this.onOkAddUser}
-          title={"Add user on project " + (project && project.travelName)}
-          selectfield={[
-            {
-              title: "User", name: "uid",
-              titleValues: names, values: usersId
-            },
-            {title: "Role", name: "role", values: ["Dad", "Mom", "Son", "Friend", "Daughter"]}]}
+          titleUsers={names}
+          valuesUsers={usersId}
         />,
         <AlertDialogue
           key={3}
