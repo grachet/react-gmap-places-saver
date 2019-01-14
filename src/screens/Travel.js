@@ -86,7 +86,10 @@ class Home extends Component {
         longitude={place.geometry.coordinates[0]}
         latitude={place.geometry.coordinates[1]}>
         <MarkerMap size={20}
-                   onClick={() => this.open([place.name, place.properties.city, place.properties.country].filter(Boolean).join(" - "))}
+                   onClick={() => {
+                     console.log("place", place);
+                     this.open([place.name, place.properties.name, place.properties.city, place.properties.state, place.properties.country].filter(Boolean).join(" - "))
+                   }}
         />
       </Marker>
     );

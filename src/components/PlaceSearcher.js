@@ -64,7 +64,7 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
         })}
 
         <strong key={1} style={{fontWeight: 300}}>
-          {" "} - {suggestion.properties.country}
+           {" - " + suggestion.properties.country} - {suggestion.properties.osm_key}
         </strong>
       </div>
     </MenuItem>
