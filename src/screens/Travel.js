@@ -3,7 +3,6 @@ import Navigation from '../containers/Navigation'
 import styles from './styles/travelStyle'
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import MapIcon from '@material-ui/icons/Map';
 import NoMapIcon from '@material-ui/icons/Dashboard';
 import connect from "react-redux/es/connect/connect";
@@ -17,12 +16,22 @@ import {mapBoxKey} from "../config/dev";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import ActionButton from "../components/ActionButton"
+import TerrainIcon from "@material-ui/icons/Terrain";
+import {setMapStyle} from "../redux/actions/user";
 
 
 var _ = require('lodash');
 var uniqid = require('uniqid');
 var moment = require('moment');
 
+const MAP_STYLE = [
+  "default",
+  "basic",
+  "streets",
+  "bright",
+  "satellite"
+]
 
 class Home extends Component {
 
@@ -53,6 +62,13 @@ class Home extends Component {
         transitionInterpolator: new FlyToInterpolator(),
       }
     })
+  }
+
+  changeMapStyle = () => {
+    const {user} = this.props;
+    let ms = user.mapStyle || "default";
+    let index = MAP_STYLE.indexOf(ms);
+    this.props.setMapStyle(MAP_STYLE[index + 1] || MAP_STYLE[0])
   }
 
   close = () => {
@@ -134,12 +150,22 @@ class Home extends Component {
           }
         />
         <Navigation title={travelName + " - " + country}/>
-        <Button onClick={() => this.setState({mapsVisible: !this.state.mapsVisible})} variant="fab"
-                color="secondary" aria-label="Add"
-                className={classes.fab}>
-          {this.state.mapsVisible && <NoMapIcon/>}
-          {!this.state.mapsVisible && <MapIcon/>}
-        </Button>
+
+
+        <ActionButton
+          mainAction={{
+            icon: this.state.mapsVisible ? <NoMapIcon/> : <MapIcon/>,
+            name: '',
+            action: () => this.setState({mapsVisible: !this.state.mapsVisible})
+          }}
+          actions={this.state.mapsVisible && [{
+            icon: <TerrainIcon/>,
+            name: 'Change map theme',
+            action: () => this.changeMapStyle()
+          }]}
+        />
+
+
         <Grid container>
           <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
             <PlaceSearcher changePlace={this.changePlace} updateProject={this.props.updateProject} project={project}/>
@@ -162,7 +188,7 @@ const mapStateToProps = ({user, projects}) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  updateProject
+  updateProject, setMapStyle
 }, dispatch);
 
 export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Home));
