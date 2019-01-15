@@ -47,7 +47,7 @@ export default class AddUserModal extends React.Component {
           users={users}
         />
         <FormControl margin={"normal"} style={{minWidth: 200}}>
-          <InputLabel htmlFor="role-select">Role</InputLabel>
+          <InputLabel htmlFor="role-select" shrink={this.state.role}>Role</InputLabel>
           <Select
             value={this.state.role}
             onChange={this.handleChange}
@@ -78,7 +78,7 @@ export default class AddUserModal extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">{this.props.title}</DialogTitle>
-          <DialogContent>
+          <DialogContent style={{height: 230}}>
             {this.renderForm()}
           </DialogContent>
           <DialogActions>

@@ -58,7 +58,6 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
 
 const styles = theme => ({
   root: {
-    height: 250,
     flexGrow: 1,
   },
   container: {
@@ -107,7 +106,7 @@ class IntegrationAutosuggest extends React.Component {
       ? []
       : this.props.users.filter(suggestion => {
         const keep =
-          count < 5 && suggestion.title.slice(0, inputLength).toLowerCase() === inputValue;
+          count < 4 && suggestion.title.slice(0, inputLength).toLowerCase() === inputValue;
 
         if (keep) {
           count += 1;
