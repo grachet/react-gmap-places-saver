@@ -4,6 +4,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import UserSearcher from './UserSearcher'
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const ROLE = [
   "Dad", "Mom", "Son", "Friend", "Daughter"
@@ -11,12 +16,55 @@ const ROLE = [
 
 export default class AddUserModal extends React.Component {
 
+  state = {
+    uid: null,
+    role: null
+  };
+
+  handleChange = event => {
+    this.setState({role: event.target.value});
+  };
+
+  onOk = () => {
+    const {role, uid} = this.state;
+    if (role && uid) {
+      this.props.onCancel();
+      this.props.onOk({role, uid});
+    }
+  }
 
   renderForm = () => {
     const {titleUsers, valuesUsers} = this.props;
-    //{role,uid}
+
+    let users = titleUsers.map((user, i) => {
+      return {title: user, value: valuesUsers[i]}
+    })
+
     return (
-      <div>a</div>
+      <div>
+        <UserSearcher
+          setUser={(uid) => this.setState({uid})}
+          users={users}
+        />
+        <FormControl margin={"normal"} style={{minWidth: 200}}>
+          <InputLabel htmlFor="role-select">Role</InputLabel>
+          <Select
+            value={this.state.role}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'role',
+              id: 'role-select',
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {
+              ROLE.map(role => <MenuItem value={role}>{role}</MenuItem>)
+            }
+          </Select>
+        </FormControl>
+      </div>
     )
   }
 
