@@ -30,6 +30,7 @@ export default class AddUserModal extends React.Component {
     if (role && uid) {
       this.props.onCancel();
       this.props.onOk({role, uid});
+      this.setState({role: null, uid: null})
     }
   }
 
@@ -46,7 +47,7 @@ export default class AddUserModal extends React.Component {
           setUser={(uid) => this.setState({uid})}
           users={users}
         />
-        <FormControl margin={"normal"} style={{minWidth: 200}}>
+        <FormControl margin={"normal"} style={{width:"100%"}}>
           <InputLabel htmlFor="role-select" shrink={this.state.role}>Role</InputLabel>
           <Select
             value={this.state.role}
@@ -73,6 +74,8 @@ export default class AddUserModal extends React.Component {
     return (
       <div>
         <Dialog
+          fullWidth
+          maxWidth={"xs"}
           open={this.props.open}
           onClose={this.props.onCancel}
           aria-labelledby="form-dialog-title"
