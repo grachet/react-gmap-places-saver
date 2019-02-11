@@ -46,9 +46,10 @@ class PlaceCard extends Component {
                         className={classes.wmax}>
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {place.name || place.properties.city}
+              {place.name || place.properties.name || place.properties.city }
             </Typography>
             <Typography gutterBottom component="p">
+              {place.name ? place.properties.name + " - " : null}
               {place.name && place.properties.city ? place.properties.city + " - " + place.properties.country : place.properties.country}
             </Typography>
             <Typography gutterBottom component="p">
@@ -69,7 +70,7 @@ class PlaceCard extends Component {
         </CardActions>
         <AlertDialogue
           open={this.state.openAlertDeleteProject}
-          title={"Delete the project « " + (place.name) + " » ?"}
+          title={"Delete the place « " + (place.name || place.properties.name) + " » ?"}
           onClose={this.onCloseDeleteProject}
           onOk={this.onOKDeleteProject}
         />
