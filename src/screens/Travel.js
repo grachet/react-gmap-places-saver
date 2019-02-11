@@ -18,7 +18,9 @@ import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import ActionButton from "../components/ActionButton"
 import TerrainIcon from "@material-ui/icons/Terrain";
+import TopIcon from "@material-ui/icons/ArrowUpward";
 import {setMapStyle} from "../redux/actions/user";
+import BottomNavigation from "../components/BottomNavigation"
 
 
 var _ = require('lodash');
@@ -154,7 +156,21 @@ class Home extends Component {
         />
         <Navigation title={travelName + " - " + country}/>
 
-
+        <BottomNavigation
+          actions={[
+            {
+              icon: this.state.mapsVisible ? <NoMapIcon/> : <MapIcon/>,
+              action: () => this.setState({mapsVisible: !this.state.mapsVisible})
+            },
+            {
+              icon: <TerrainIcon/>,
+              action: () => this.changeMapStyle()
+            }, {
+              icon: <TopIcon/>,
+              action: () => window.scrollTo(0, 0)
+            }
+          ]}
+        />
         <ActionButton
           mainAction={{
             icon: this.state.mapsVisible ? <NoMapIcon/> : <MapIcon/>,

@@ -3,3 +3,9 @@
         display: none !important;
     }
 }
+
+@media only screen and (min-width: 800px) {
+    .hideOnDesktop {
+        display: none !important;
+    }
+}
