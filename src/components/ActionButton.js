@@ -4,7 +4,6 @@ import {withStyles} from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import Button from "@material-ui/core/Button/Button";
-import BottomNavigation from "@material-ui/core/BottomNavigation/BottomNavigation";
 
 const styles = {
   speedDial: {

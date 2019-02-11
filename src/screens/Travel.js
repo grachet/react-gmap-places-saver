@@ -51,6 +51,19 @@ class Home extends Component {
     messageAlert: null
   }
 
+  goToPlace = (place) => {
+    this.setState({
+      mapsVisible: true,
+      viewport: {
+        ...this.state.viewport,
+        latitude: place.geometry.coordinates[1],
+        longitude: place.geometry.coordinates[0],
+        zoom: 9,
+        transitionDuration: 5000,
+        transitionInterpolator: new FlyToInterpolator(),
+      }
+    })
+  }
 
   changePlace = (place) => {
     console.log("place", place)
@@ -131,6 +144,7 @@ class Home extends Component {
 
       <div className={classes.root}>
         <Snackbar
+          style={{zIndex: 100000}}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
@@ -191,7 +205,7 @@ class Home extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={8} xl={9}>
             {this.state.mapsVisible && this.renderTravelMap(project)}
-            {!this.state.mapsVisible && <TravelGrid updateProject={this.props.updateProject} project={project}/>}
+            {!this.state.mapsVisible && <TravelGrid goToPlace={this.goToPlace} updateProject={this.props.updateProject} project={project}/>}
           </Grid>
         </Grid>
       </div>

@@ -37,7 +37,7 @@ class TravelGrid extends React.Component {
         {project && project.places && _.orderBy(_.values(project.places), function (o) {
           return new moment(o.arrival);
         }, ['asc']).map(place => <Grid key={project.projectId} item xs={12} sm={6} md={6} lg={4} xl={3}>
-          <PlaceCard updateProject={updateProject} project={project} place={place}/>
+          <PlaceCard  goToPlace={this.props.goToPlace} updateProject={updateProject} project={project} place={place}/>
         </Grid>)}
       </Grid>
     );

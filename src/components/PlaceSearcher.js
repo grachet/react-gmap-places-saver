@@ -26,7 +26,6 @@ function renderInputComponent(inputProps) {
   return (
     <TextField
       margin="normal"
-      autoFocus
       required
       variant={"filled"}
       fullWidth

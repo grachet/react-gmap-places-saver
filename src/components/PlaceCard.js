@@ -38,11 +38,11 @@ class PlaceCard extends Component {
 
   render() {
 
-    const {classes, place} = this.props;
+    const {classes, place,goToPlace} = this.props;
     return (
       <Card>
-        <CardActionArea to={"/"}
-                        component={Link}
+        <CardActionArea
+                        onClick={() => goToPlace(place)}
                         className={classes.wmax}>
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
