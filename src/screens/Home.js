@@ -79,7 +79,7 @@ class Home extends Component {
           onOk={this.onValidateCreateProject}
           title={"New travel"}
           text={"Where do you want to go ?"}
-          textfield={[{title: "Travel name", name: "travelName"}, {title: "Country", name: "country"}]}
+          textfield={[{title: "Travel name", name: "travelName", validationSchema : ["string", "required"]}, {title: "Country", name: "country", validationSchema : ["string", "required"]}]}
         />
         <UsersModal
           user={this.props.user}

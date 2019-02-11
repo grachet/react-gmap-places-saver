@@ -58,7 +58,7 @@ export default class FormDialog extends React.Component {
             }
             <Formik
               validateOnBlur={true}
-              validateOnChange={false}
+              validateOnChange={true}
               enableReinitialize
               ref={ref => this.refForm = ref}
               onSubmit={(values, {setSubmitting}) => {

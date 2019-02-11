@@ -5,30 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import LightIcon from '@material-ui/icons/Opacity';
 import HighlightOff from '@material-ui/icons/HighlightOff';
-
 import SettingsIcon from '@material-ui/icons/Settings';
 import Logo from '@material-ui/icons/PinDrop';
-
+import styles from '../components/styles/navigationStyle'
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {Link} from "react-router-dom";
 import {signOut, toggleTheme} from "../redux/actions/user"
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-
-
-const styles = {
-  grow: {
-    flexGrow: 1,
-  },
-  logo: {
-    height: 60
-  },
-  title: {
-    textDecoration: 'none',
-    flexGrow: 1,
-  }
-};
 
 class MenuAppBar extends React.Component {
 
@@ -47,12 +32,12 @@ class MenuAppBar extends React.Component {
           </Typography>
 
           <Typography variant="title" color="inherit" className={classes.title}>
-            {this.props.title}
+            <span className={"hideOnMobile"}>{this.props.title}</span>
           </Typography>
 
 
           <Typography variant="subheading" color="inherit">
-            {user.isAnonymous ? "Anonymous" : user.displayName}
+            <span className={"hideOnMobile"}>{user.isAnonymous ? "Anonymous" : user.displayName}</span>
           </Typography>
 
           <IconButton

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
-import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -32,6 +30,36 @@ function renderInputComponent(inputProps) {
     />
   );
 }
+
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function match(text, query) {
+  return (
+    query
+      .trim()
+      .split(" ")
+      .reduce((result, word) => {
+        if (!word.length) return result;
+        const wordLen = word.length;
+        const regex = new RegExp(escapeRegexCharacters(word), 'i');
+        const {index = -1} = text.match(regex);
+        if (index > -1) {
+          result.push([index, index + wordLen]);
+          // Replace what we just found with spaces so we don't find it again.
+          text =
+            text.slice(0, index) +
+            new Array(wordLen + 1).join(' ') +
+            text.slice(index + wordLen);
+        }
+        return result;
+      }, [])
+      .sort((match1, match2) => {
+        return match1[0] - match2[0];
+      })
+  );
+};
 
 function renderSuggestion(suggestion, {query, isHighlighted}) {
   const matches = match(suggestion.title, query);
@@ -96,25 +124,38 @@ class IntegrationAutosuggest extends React.Component {
   }
 
 
+
   getSuggestions = (value) => {
-    const inputValue = deburr(value.trim()).toLowerCase();
-    const inputLength = inputValue.length;
+    const escapedValue = escapeRegexCharacters(value.trim().toLowerCase());
     let count = 0;
 
-    //todo
-    return inputLength === 0
-      ? []
-      : this.props.users.filter(suggestion => {
-        const keep =
-          count < 4 && suggestion.title.slice(0, inputLength).toLowerCase() === inputValue;
+    if (escapedValue === '') {
+      return [];
+    }
 
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      });
+    const regex = new RegExp(escapedValue, 'i');
+    return this.props.users.filter(suggestion => regex.test(suggestion.title)).slice(0, 4);
   }
+
+  // getSuggestions = (value) => {
+  //   const inputValue = deburr(value.trim()).toLowerCase();
+  //   const inputLength = inputValue.length;
+  //   let count = 0;
+  //
+  //   //todo
+  //   return inputLength === 0
+  //     ? []
+  //     : this.props.users.filter(suggestion => {
+  //       const keep =
+  //         count < 4 && suggestion.title.slice(0, inputLength).toLowerCase() === inputValue;
+  //
+  //       if (keep) {
+  //         count += 1;
+  //       }
+  //
+  //       return keep;
+  //     });
+  // }
 
 
   handleSuggestionsFetchRequested = ({value}) => {

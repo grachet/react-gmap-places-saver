@@ -73,7 +73,8 @@ const baseStyles = {
     bottom: 80,
     right: 80,
     zIndex: 1000
-  }
+  },
+
 
 
 };

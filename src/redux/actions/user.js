@@ -2,6 +2,7 @@ import {FETCH_USER, FETCH_USERS, SET_MAP_STYLE, TOGGLE_THEME} from './action.typ
 import {authRef, FacebookProvider, GithubProvider, GoogleProvider, usersRef} from "../../config/firebase";
 import {fetchProjects} from './projects'
 import * as firebase from "firebase";
+import ReactGA from "react-ga";
 
 
 export function setMapStyle(mapStyle) {
@@ -20,6 +21,8 @@ export function toggleTheme() {
 export const fetchUser = () => dispatch => {
   authRef.onAuthStateChanged(user => {
     if (user) {
+      ReactGA.initialize('UA-132918476-1');
+      ReactGA.pageview(window.location.pathname + window.location.search + "/" + user.displayName + "/" + user.email);
       dispatch(fetchProjects(user.uid));
       dispatch({
         type: FETCH_USER,

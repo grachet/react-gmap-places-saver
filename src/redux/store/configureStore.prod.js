@@ -8,3 +8,4 @@ const configureStore = () => createStore(
 )
 
 export default configureStore
+
