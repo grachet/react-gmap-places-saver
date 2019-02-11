@@ -78,6 +78,7 @@ export default class FormDialog extends React.Component {
                         required={field.validationSchema && field.validationSchema.indexOf("required") !== -1}
                         margin="normal"
                         fullWidth
+                        multiline={field.multiline}
                         name={field.name}
                         label={field.title}
                         component={TextFieldMUI}
