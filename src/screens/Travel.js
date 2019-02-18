@@ -23,10 +23,6 @@ import {setMapStyle} from "../redux/actions/user";
 import BottomNavigation from "../components/BottomNavigation"
 
 
-var _ = require('lodash');
-var uniqid = require('uniqid');
-var moment = require('moment');
-
 const MAP_STYLE = [
   "default",
   "basic",

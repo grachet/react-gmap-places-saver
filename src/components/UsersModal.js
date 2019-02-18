@@ -14,7 +14,6 @@ import AlertDialogue from '../components/AlertDialogue'
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 
-var uniqid = require('uniqid');
 var _ = require('lodash');
 
 const styles = {

@@ -12,7 +12,6 @@ import {bindActionCreators} from 'redux';
 import {fetchProjects, removeProject, updateProject} from '../redux/actions/projects'
 import PromptDialogue from '../components/PromptDialogue'
 import UsersModal from '../components/UsersModal'
-import NoMapIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import ActionButton from "../components/ActionButton";
 
 var _ = require('lodash');
