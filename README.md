@@ -1,3 +1,9 @@
-git clone https://github.com/grachet/react-gmap-places-saver.git
+# React Gmap Places Saver
+
+[Demo](https://react-gmap-place-server-2be4c.firebaseapp.com/)
+
+```
 npm i
 npm start
+``` 
+
